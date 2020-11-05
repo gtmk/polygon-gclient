@@ -1,6 +1,11 @@
 package polygonio
 
-import "time"
+import (
+	"database/sql/driver"
+	"encoding/json"
+	"errors"
+	"time"
+)
 
 type CommonResponse struct {
 	Ticker      string `json:"ticker"`
@@ -8,24 +13,19 @@ type CommonResponse struct {
 	Adjusted    bool   `json:"adjusted"`
 	QueryCount  int32  `json:"query_count"`
 	ResultCount int32  `json:"results_count"`
-
-	//Stock Splits & Dividends & Financials
-	Count int32 `json:"count"`
-
-	//Ticker
-	Page    int32 `json:"page"`
-	PerPage int32 `json:"perPage"`
+	Count       int32  `json:"count"`
+	Page        int32  `json:"page"`
+	PerPage     int32  `json:"perPage"`
 }
 
 type Bar struct {
-	Ticker string  `json:"T"`
 	Time   int64   `json:"t"`
 	Volume float32 `json:"v"`
 	Open   float32 `json:"o"`
 	Close  float32 `json:"c"`
 	High   float32 `json:"h"`
 	Low    float32 `json:"l"`
-	Number int32   `json:"n"`
+	Trades int32   `json:"n"`
 	VW     float32 `json:"vw"`
 }
 
@@ -69,20 +69,48 @@ type TickerOptions struct {
 }
 
 type Ticker struct {
-	Ticker      string            `json:"ticker"`
-	Name        string            `json:"name"`
-	Market      string            `json:"market"`
-	Locale      Locale            `json:"locale"`
-	Type        string            `json:"type"`
-	Currenct    string            `json:"currency"`
-	Active      bool              `json:"active"`
-	PrimaryExch string            `json:"primaryExch"`
-	Updated     string            `json:"updated"`
-	Codes       map[string]string `json:"codes"`
-	URL         string            `json:"url"`
+	Ticker      string    `json:"ticker"`
+	Name        string    `json:"name"`
+	Market      string    `json:"market"`
+	Locale      Locale    `json:"locale"`
+	Type        string    `json:"type"`
+	Currency    string    `json:"currency"`
+	Active      bool      `json:"active"`
+	PrimaryExch string    `json:"primaryExch"`
+	Updated     string    `json:"updated"`
+	Codes       *CodesMap `json:"codes,omitempty"`
+	Attrs       *AttrsMap `json:"attrs,omitempty"`
+	URL         string    `json:"url"`
 }
 
 type Tickers []Ticker
+
+type CodesMap map[string]string
+type AttrsMap map[string]string
+
+func (cm CodesMap) Value() (driver.Value, error) {
+	return json.Marshal(cm)
+}
+
+func (am AttrsMap) Value() (driver.Value, error) {
+	return json.Marshal(am)
+}
+
+func (cm *CodesMap) Scan(value interface{}) error {
+	b, ok := value.([]byte)
+	if !ok {
+		return errors.New("type assertion to []byte failed")
+	}
+	return json.Unmarshal(b, &cm)
+}
+
+func (am *AttrsMap) Scan(value interface{}) error {
+	b, ok := value.([]byte)
+	if !ok {
+		return errors.New("type assertion to []byte failed")
+	}
+	return json.Unmarshal(b, &am)
+}
 
 type NewsOptions struct {
 	PerPage int32 `url:"perpage,omitempty"`
