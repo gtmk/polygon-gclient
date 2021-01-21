@@ -19,6 +19,7 @@ type CommonResponse struct {
 }
 
 type Bar struct {
+	Ticker string  `json:"T"`
 	Time   int64   `json:"t"`
 	Volume float32 `json:"v"`
 	Open   float32 `json:"o"`
@@ -27,9 +28,85 @@ type Bar struct {
 	Low    float32 `json:"l"`
 	Trades int32   `json:"n"`
 	VW     float32 `json:"vw"`
+	AV     int64   `json:"av"`
 }
 
 type Bars []Bar
+
+type Trade struct {
+	ID         int64   `json:"I"`
+	Exchange   int32   `json:"x"` // exchange id
+	Price      float64 `json:"p"` // price
+	TradeID    string  `json:"i"` // trade id, uniquely identify the trade
+	CorrID     int32   `json:"e"` // trade correction indicator
+	ReportID   int32   `json:"r"` // report id
+	ExTime     int64   `json:"y"` // participant timestamp
+	SIPTime    int64   `json:"t"` // sip timestamp
+	TRFTime    int64   `json:"f"` // trade report timestamp
+	Conditions []int32 `json:"c"` // conditions
+	Sequence   int32   `json:"q"` // sequence number in order
+	Size       int32   `json:"s"` // size of the trade
+	ListedEx   int32   `json:"z"` // listed exchange
+}
+
+type LastTrade struct {
+	Condition1 int32   `json:"cond1"`
+	Exchange   int32   `json:"exchange"`
+	Price      float64 `json:"float64"`
+	Size       int32   `json:"size"`
+	Timestamp  int64   `json:"timestamp"`
+}
+
+type Trades []Trade
+
+type Quote struct {
+	ExTime      int64   `json:"y"` // participant timestamp
+	SIPTime     int64   `json:"t"` // sip timestamp
+	TRFTime     int64   `json:"f"` // trade report timestamp
+	Sequence    int32   `json:"q"` // sequence number in order
+	Conditions  []int32 `json:"c"` // conditions
+	Indicators  []int32 `json:"i"` // indicators
+	BidPrice    float64 `json:"p"`
+	BidExchange int32   `json:"x"`
+	BidSize     int32   `json:"s"`
+	AskPrice    float64 `json:"P"`
+	AskExchange int32   `json:"X"`
+	AskSize     int32   `json:"S"`
+	ListedEx    int32   `json:"z"` // listed exchange
+}
+
+type LastQuote struct {
+	BidPrice    float64 `json:"bidprice"`
+	BidExchange int32   `json:"bidexchange"`
+	BidSize     int32   `json:"bidsize"`
+	AskPrice    float64 `json:"askprice"`
+	AskExchange int32   `json:"askexchange"`
+	AskSize     int32   `json:"asksize"`
+	Timestamp   int64   `json:"timestamp"`
+}
+
+type Quotes []Quote
+
+type Reverse string
+
+const (
+	ReserveTrue  Reverse = "true"
+	ReserveFalse Reverse = "false"
+)
+
+type Snapshot struct {
+	Ticker         string    `json:"ticker"`
+	TodayChange    float32   `json:"todaysChange"`
+	TodayChangePct float32   `json:"todaysChangePerc"`
+	Day            Bar       `json:"day"`
+	PrevDay        Bar       `json:"prevDay"`
+	LastQuote      LastQuote `json:"lastQuote"`
+	LastTrade      LastTrade `json:"lastTrade"`
+	Min            Bar       `json:"min"`
+	Updated        int64     `json:"updated"`
+}
+
+type Snapshots []Snapshot
 
 type Sort string
 
@@ -46,8 +123,12 @@ const (
 )
 
 type RequestOptions struct {
-	Unadjusted Unadjusted `url:"unadjusted,omitempty"`
-	Sort       Sort       `url:"sort,omitempty"`
+	Unadjusted     Unadjusted `url:"unadjusted,omitempty"`
+	Sort           Sort       `url:"sort,omitempty"`
+	Timestamp      int64      `url:"timestamp,omitempty"`
+	TimestampLimit int64      `url:"timestampLimit,omitempty"`
+	Reverse        Reverse    `url:"reverse,omitempty"`
+	Limit          int64      `url:"limit,omitempty"`
 }
 
 type TickerSort string
@@ -204,8 +285,8 @@ const (
 type Tick string
 
 const (
-	Trades Tick = "trades"
-	Quotes Tick = "quotes"
+	TradesName Tick = "trades"
+	QuotesName Tick = "quotes"
 )
 
 type Direction string
