@@ -6,15 +6,15 @@ package polygonio
 ////////                                                        ////////////
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
-func (c *Client) ForexPreviousClose(ticker string, opts *RequestOptions) (Bars, error) {
+func (c *Client) ForexPreviousClose(ticker string, opts *RequestOptions) (*Bars, error) {
 	return c.StockPreviousClose(ticker, nil)
 }
 
-func (c *Client) ForexAggregates(ticker string, multiplier int32, timespan Timespan, from, to string, opts *RequestOptions) (Bars, error) {
+func (c *Client) ForexAggregates(ticker string, multiplier int32, timespan Timespan, from, to string, opts *RequestOptions) (*Bars, error) {
 	return c.StockAggregates(ticker, multiplier, timespan, from, to, nil)
 }
 
-func (c *Client) ForexGroupedDaily(locale Locale, date string, opts *RequestOptions) (Bars, error) {
+func (c *Client) ForexGroupedDaily(locale Locale, date string, opts *RequestOptions) (*Bars, error) {
 	return c.StockGroupedDaily(locale, FX, date, opts)
 }
 

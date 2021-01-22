@@ -167,7 +167,7 @@ type Ticker struct {
 type Tickers []Ticker
 
 type CodesMap map[string]string
-type AttrsMap map[string]string
+type AttrsMap map[string]interface{}
 
 func (cm CodesMap) Value() (driver.Value, error) {
 	return json.Marshal(cm)
@@ -309,7 +309,7 @@ type Daily struct {
 	AfterHours float32 `json:"afterHours"`
 }
 
-type TickerDetail struct {
+type TickerDetails struct {
 	Logo           string   `json:"logo"`
 	ListDate       string   `json:"listdate"`
 	CIK            string   `json:"cik"`
@@ -318,8 +318,8 @@ type TickerDetail struct {
 	LEI            string   `json:"lei"`
 	SIC            int32    `json:"sic"`
 	Country        string   `json:"country"`
-	Indistry       string   `json:"industry"`
-	Secret         string   `json:"sector"`
+	Industry       string   `json:"industry"`
+	Sector         string   `json:"sector"`
 	MarketCap      int64    `json:"marketcap"`
 	Employees      int64    `json:"employees"`
 	Phone          string   `json:"phone"`
@@ -335,7 +335,7 @@ type TickerDetail struct {
 	HQCountry      string   `json:"hq_country"`
 	Type           string   `json:"type"`
 	Updated        string   `json:"updated"`
-	Tages          []string `json:"tags"`
+	Tags           []string `json:"tags"`
 	Similar        []string `json:"similar"`
 	Active         bool     `json:"active"`
 }
