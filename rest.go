@@ -165,8 +165,8 @@ func (c *Client) ReferenceTickerTypes() (map[string]string, map[string]string, e
 	return out.Results.Types, out.Results.IndexTypes, err
 }
 
-func (c *Client) ReferenceTickerDetail(ticker string) (TickerDetail, error) {
-	var out TickerDetail
+func (c *Client) ReferenceTickerDetail(ticker string) (TickerDetails, error) {
+	var out TickerDetails
 	endpoint := fmt.Sprintf("/v1/meta/symbols/%s/company", url.PathEscape(ticker))
 	err := c.GetJSON(context.Background(), endpoint, &out)
 	return out, err

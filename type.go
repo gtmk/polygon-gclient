@@ -33,6 +33,10 @@ type Bar struct {
 
 type Bars []Bar
 
+type StockBarsResponse struct {
+	Results Bars `json:"results"`
+}
+
 type Trade struct {
 	ID         int64   `json:"I"`
 	Exchange   int32   `json:"x"` // exchange id
@@ -58,6 +62,10 @@ type LastTrade struct {
 }
 
 type Trades []Trade
+
+type StockTradesResponse struct {
+	Results Trades `json:"results"`
+}
 
 type Quote struct {
 	ExTime      int64   `json:"y"` // participant timestamp
@@ -87,6 +95,10 @@ type LastQuote struct {
 
 type Quotes []Quote
 
+type StockQuotesResponse struct {
+	Results Quotes `json:"results"`
+}
+
 type Reverse string
 
 const (
@@ -107,6 +119,10 @@ type Snapshot struct {
 }
 
 type Snapshots []Snapshot
+
+type StockSnapshotsResponse struct {
+	Results Snapshots `json:"tickers"`
+}
 
 type Sort string
 
@@ -542,4 +558,65 @@ type CryptoDaily struct {
 	Close         float32      `json:"close"`
 	OpenTrades    CryptoTrades `json:"openTrades"`
 	ClosingTrades CryptoTrades `json:"closingTrades"`
+}
+
+// PolygonClientMsg is the standard message sent by clients of the stream interface
+type PolygonClientMsg struct {
+	Action string `json:"action"`
+	Params string `json:"params"`
+}
+
+type PolygonAuthMsg struct {
+	Event   string `json:"ev"`
+	Status  string `json:"status"`
+	Message string `json:"message"`
+}
+
+// PolygonServerMsg contains the field that is present in all responses to identify their type
+type PolgyonServerMsg struct {
+	Event string `json:"ev"`
+}
+
+// StreamTrade is the structure that defines a trade that
+// polygon transmits via websocket protocol.
+type StreamTrade struct {
+	Symbol     string  `json:"sym"`
+	Exchange   int     `json:"x"`
+	TradeID    string  `json:"i"`
+	Price      float64 `json:"p"`
+	Size       int64   `json:"s"`
+	Timestamp  int64   `json:"t"`
+	Conditions []int   `json:"c"`
+}
+
+// StreamQuote is the structure that defines a quote that
+// polygon transmits via websocket protocol.
+type StreamQuote struct {
+	Symbol      string  `json:"sym"`
+	Condition   int     `json:"c"`
+	BidExchange int     `json:"bx"`
+	AskExchange int     `json:"ax"`
+	BidPrice    float64 `json:"bp"`
+	AskPrice    float64 `json:"ap"`
+	BidSize     int64   `json:"bs"`
+	AskSize     int64   `json:"as"`
+	Timestamp   int64   `json:"t"`
+}
+
+// StreamAggregate is the structure that defines an aggregate that
+// polygon transmits via websocket protocol.
+type StreamAggregate struct {
+	Event             string  `json:"ev"`
+	Symbol            string  `json:"sym"`
+	Volume            int     `json:"v"`
+	AccumulatedVolume int     `json:"av"`
+	OpeningPrice      float64 `json:"op"`
+	VWAP              float64 `json:"vw"`
+	OpenPrice         float64 `json:"o"`
+	ClosePrice        float64 `json:"c"`
+	HighPrice         float64 `json:"h"`
+	LowPrice          float64 `json:"l"`
+	Average           float64 `json:"a"`
+	StartTimestamp    int64   `json:"s"`
+	EndTimestamp      int64   `json:"e"`
 }
