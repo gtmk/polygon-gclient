@@ -49,9 +49,9 @@ func TestAPICalls(t *testing.T) {
 		if err := stream.Subscribe(`T.*`); err != nil {
 			fmt.Println("error on subscribing: ", err)
 		}
-		for {
-			time.Sleep(time.Duration(5) * time.Second)
-		}
+		//for {
+		//	time.Sleep(time.Duration(5) * time.Second)
+		//}
 	}
 
 	//rest test
@@ -83,8 +83,8 @@ func TestAPICalls(t *testing.T) {
 		fmt.Println(fmt.Sprintf("%+v", lcs))
 		fmt.Println(fmt.Sprintf("%+v", err))
 
-		sps, err := client.ReferenceStockSplits("AAPL")
-		fmt.Println(fmt.Sprintf("%+v", sps))
+		splts, err := client.ReferenceStockSplits("AAPL")
+		fmt.Println(fmt.Sprintf("%+v", splts))
 		fmt.Println(fmt.Sprintf("%+v", err))
 
 		fns, err := client.ReferenceFinancials("AAPL", &FinancialOptions{Limit: 10, Type: Y})
@@ -131,25 +131,24 @@ func TestAPICalls(t *testing.T) {
 		fmt.Println(fmt.Sprintf("%+v", dls))
 		fmt.Println(fmt.Sprintf("%+v", err))
 
-		rs, err := client.StockConditionMappings(Trades)
+		rs, err := client.StockConditionMappings("trades")
 		fmt.Println(fmt.Sprintf("%+v", rs))
 		fmt.Println(fmt.Sprintf("%+v", err))
 
 		opts := RequestOptions{Limit: 100}
 
-		cms, tds, err := client.StockHistoricQuotes("AAPL", "2020-10-14", &opts)
-		fmt.Println(fmt.Sprintf("%+v", cms))
-		fmt.Println(fmt.Sprintf("%+v", len(tds)))
+		tds, err := client.StockQuotes("AAPL", "2020-10-14", &opts)
+		fmt.Println(fmt.Sprintf("%+v", len(*tds)))
 		fmt.Println(fmt.Sprintf("%+v", err))
 
 		last, err := client.StockLastQuote("AAPL")
 		fmt.Println(fmt.Sprintf("%+v", last))
 		fmt.Println(fmt.Sprintf("%+v", err))
 
-		sps, err := client.StockSnapshotAll()
-		fmt.Println(fmt.Sprintf("%+v", sps))
+		spa, err := client.StockSnapshotAll()
+		fmt.Println(fmt.Sprintf("%+v", spa))
 		fmt.Println(fmt.Sprintf("%+v", err))
-		for i, e := range *sps {
+		for i, e := range *spa {
 			fmt.Println(fmt.Sprintf("%s, %d, %+v, %+v", e.Ticker, i, e.PrevDay, e.Min))
 		}
 		sps, err := client.StockSnapshotSingle("AAPL")
