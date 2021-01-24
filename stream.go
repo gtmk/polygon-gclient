@@ -108,6 +108,8 @@ func (s *Stream) Close() error {
 		return err
 	}
 	s.closed.Store(true)
+	close(s.MessageC)
+	close(s.ErrorC)
 	return s.conn.Close()
 }
 
