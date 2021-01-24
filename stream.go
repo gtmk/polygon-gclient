@@ -30,17 +30,18 @@ type Stream struct {
 	sync.Once
 	conn                  *websocket.Conn
 	authenticated, closed atomic.Value
-	messageC              chan []byte
-	errorC                chan error
 	credentials           credentials
+
+	MessageC chan []byte
+	ErrorC   chan error
 }
 
 func GetStream(apiKey, streamEndpoint string) (*Stream, error) {
 	once.Do(func() {
 		stream = &Stream{
 			authenticated: atomic.Value{},
-			messageC:      make(chan []byte, 100),
-			errorC:        make(chan error, 100),
+			MessageC:      make(chan []byte, 100),
+			ErrorC:        make(chan error, 100),
 			credentials: credentials{apiKey: apiKey,
 				streamEndpoint: streamEndpoint},
 		}
