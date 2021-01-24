@@ -1,4 +1,4 @@
-module github.com/polygon-io/client-golang
+module github.com/gtmk/polygon-gclient
 
 go 1.13
 
