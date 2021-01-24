@@ -17,7 +17,643 @@ var (
 	_ easyjson.Marshaler
 )
 
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang(in *jlexer.Lexer, out *Trade) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient(in *jlexer.Lexer, out *StreamTrades) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		in.Skip()
+		*out = nil
+	} else {
+		in.Delim('[')
+		if *out == nil {
+			if !in.IsDelim(']') {
+				*out = make(StreamTrades, 0, 0)
+			} else {
+				*out = StreamTrades{}
+			}
+		} else {
+			*out = (*out)[:0]
+		}
+		for !in.IsDelim(']') {
+			var v1 StreamTrade
+			easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient1(in, &v1)
+			*out = append(*out, v1)
+			in.WantComma()
+		}
+		in.Delim(']')
+	}
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient(out *jwriter.Writer, in StreamTrades) {
+	if in == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+		out.RawString("null")
+	} else {
+		out.RawByte('[')
+		for v2, v3 := range in {
+			if v2 > 0 {
+				out.RawByte(',')
+			}
+			easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient1(out, v3)
+		}
+		out.RawByte(']')
+	}
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v StreamTrades) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v StreamTrades) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *StreamTrades) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *StreamTrades) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient(l, v)
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient1(in *jlexer.Lexer, out *StreamTrade) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "sym":
+			out.Symbol = string(in.String())
+		case "x":
+			out.Exchange = int32(in.Int32())
+		case "i":
+			out.TradeID = string(in.String())
+		case "p":
+			out.Price = float64(in.Float64())
+		case "s":
+			out.Size = int32(in.Int32())
+		case "t":
+			out.Timestamp = int64(in.Int64())
+		case "c":
+			if in.IsNull() {
+				in.Skip()
+				out.Conditions = nil
+			} else {
+				in.Delim('[')
+				if out.Conditions == nil {
+					if !in.IsDelim(']') {
+						out.Conditions = make([]int32, 0, 16)
+					} else {
+						out.Conditions = []int32{}
+					}
+				} else {
+					out.Conditions = (out.Conditions)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v4 int32
+					v4 = int32(in.Int32())
+					out.Conditions = append(out.Conditions, v4)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient1(out *jwriter.Writer, in StreamTrade) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"sym\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.Symbol))
+	}
+	{
+		const prefix string = ",\"x\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Exchange))
+	}
+	{
+		const prefix string = ",\"i\":"
+		out.RawString(prefix)
+		out.String(string(in.TradeID))
+	}
+	{
+		const prefix string = ",\"p\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.Price))
+	}
+	{
+		const prefix string = ",\"s\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Size))
+	}
+	{
+		const prefix string = ",\"t\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.Timestamp))
+	}
+	{
+		const prefix string = ",\"c\":"
+		out.RawString(prefix)
+		if in.Conditions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v5, v6 := range in.Conditions {
+				if v5 > 0 {
+					out.RawByte(',')
+				}
+				out.Int32(int32(v6))
+			}
+			out.RawByte(']')
+		}
+	}
+	out.RawByte('}')
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient2(in *jlexer.Lexer, out *StreamQuotes) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		in.Skip()
+		*out = nil
+	} else {
+		in.Delim('[')
+		if *out == nil {
+			if !in.IsDelim(']') {
+				*out = make(StreamQuotes, 0, 0)
+			} else {
+				*out = StreamQuotes{}
+			}
+		} else {
+			*out = (*out)[:0]
+		}
+		for !in.IsDelim(']') {
+			var v7 StreamQuote
+			easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient3(in, &v7)
+			*out = append(*out, v7)
+			in.WantComma()
+		}
+		in.Delim(']')
+	}
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient2(out *jwriter.Writer, in StreamQuotes) {
+	if in == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+		out.RawString("null")
+	} else {
+		out.RawByte('[')
+		for v8, v9 := range in {
+			if v8 > 0 {
+				out.RawByte(',')
+			}
+			easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient3(out, v9)
+		}
+		out.RawByte(']')
+	}
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v StreamQuotes) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient2(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v StreamQuotes) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient2(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *StreamQuotes) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient2(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *StreamQuotes) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient2(l, v)
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient3(in *jlexer.Lexer, out *StreamQuote) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "sym":
+			out.Symbol = string(in.String())
+		case "c":
+			out.Condition = int32(in.Int32())
+		case "bx":
+			out.BidExchange = int32(in.Int32())
+		case "ax":
+			out.AskExchange = int32(in.Int32())
+		case "bp":
+			out.BidPrice = float64(in.Float64())
+		case "ap":
+			out.AskPrice = float64(in.Float64())
+		case "bs":
+			out.BidSize = int64(in.Int64())
+		case "as":
+			out.AskSize = int64(in.Int64())
+		case "t":
+			out.Timestamp = int64(in.Int64())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient3(out *jwriter.Writer, in StreamQuote) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"sym\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.Symbol))
+	}
+	{
+		const prefix string = ",\"c\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Condition))
+	}
+	{
+		const prefix string = ",\"bx\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.BidExchange))
+	}
+	{
+		const prefix string = ",\"ax\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.AskExchange))
+	}
+	{
+		const prefix string = ",\"bp\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.BidPrice))
+	}
+	{
+		const prefix string = ",\"ap\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.AskPrice))
+	}
+	{
+		const prefix string = ",\"bs\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.BidSize))
+	}
+	{
+		const prefix string = ",\"as\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.AskSize))
+	}
+	{
+		const prefix string = ",\"t\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.Timestamp))
+	}
+	out.RawByte('}')
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient4(in *jlexer.Lexer, out *StreamAggregates) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		in.Skip()
+		*out = nil
+	} else {
+		in.Delim('[')
+		if *out == nil {
+			if !in.IsDelim(']') {
+				*out = make(StreamAggregates, 0, 0)
+			} else {
+				*out = StreamAggregates{}
+			}
+		} else {
+			*out = (*out)[:0]
+		}
+		for !in.IsDelim(']') {
+			var v10 StreamAggregate
+			easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient5(in, &v10)
+			*out = append(*out, v10)
+			in.WantComma()
+		}
+		in.Delim(']')
+	}
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient4(out *jwriter.Writer, in StreamAggregates) {
+	if in == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+		out.RawString("null")
+	} else {
+		out.RawByte('[')
+		for v11, v12 := range in {
+			if v11 > 0 {
+				out.RawByte(',')
+			}
+			easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient5(out, v12)
+		}
+		out.RawByte(']')
+	}
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v StreamAggregates) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient4(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v StreamAggregates) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient4(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *StreamAggregates) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient4(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *StreamAggregates) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient4(l, v)
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient5(in *jlexer.Lexer, out *StreamAggregate) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "ev":
+			out.Event = string(in.String())
+		case "sym":
+			out.Symbol = string(in.String())
+		case "v":
+			out.Volume = int32(in.Int32())
+		case "av":
+			out.AccumulatedVolume = int32(in.Int32())
+		case "op":
+			out.OpeningPrice = float64(in.Float64())
+		case "vw":
+			out.VWAP = float64(in.Float64())
+		case "o":
+			out.OpenPrice = float64(in.Float64())
+		case "c":
+			out.ClosePrice = float64(in.Float64())
+		case "h":
+			out.HighPrice = float64(in.Float64())
+		case "l":
+			out.LowPrice = float64(in.Float64())
+		case "a":
+			out.Average = float64(in.Float64())
+		case "s":
+			out.StartTimestamp = int64(in.Int64())
+		case "e":
+			out.EndTimestamp = int64(in.Int64())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient5(out *jwriter.Writer, in StreamAggregate) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"ev\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.Event))
+	}
+	{
+		const prefix string = ",\"sym\":"
+		out.RawString(prefix)
+		out.String(string(in.Symbol))
+	}
+	{
+		const prefix string = ",\"v\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Volume))
+	}
+	{
+		const prefix string = ",\"av\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.AccumulatedVolume))
+	}
+	{
+		const prefix string = ",\"op\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.OpeningPrice))
+	}
+	{
+		const prefix string = ",\"vw\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.VWAP))
+	}
+	{
+		const prefix string = ",\"o\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.OpenPrice))
+	}
+	{
+		const prefix string = ",\"c\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.ClosePrice))
+	}
+	{
+		const prefix string = ",\"h\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.HighPrice))
+	}
+	{
+		const prefix string = ",\"l\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.LowPrice))
+	}
+	{
+		const prefix string = ",\"a\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.Average))
+	}
+	{
+		const prefix string = ",\"s\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.StartTimestamp))
+	}
+	{
+		const prefix string = ",\"e\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.EndTimestamp))
+	}
+	out.RawByte('}')
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(in *jlexer.Lexer, out *StockTradesResponse) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "results":
+			if in.IsNull() {
+				in.Skip()
+				out.Results = nil
+			} else {
+				in.Delim('[')
+				if out.Results == nil {
+					if !in.IsDelim(']') {
+						out.Results = make(Trades, 0, 0)
+					} else {
+						out.Results = Trades{}
+					}
+				} else {
+					out.Results = (out.Results)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v13 Trade
+					easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient7(in, &v13)
+					out.Results = append(out.Results, v13)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(out *jwriter.Writer, in StockTradesResponse) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"results\":"
+		out.RawString(prefix[1:])
+		if in.Results == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v14, v15 := range in.Results {
+				if v14 > 0 {
+					out.RawByte(',')
+				}
+				easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient7(out, v15)
+			}
+			out.RawByte(']')
+		}
+	}
+	out.RawByte('}')
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v StockTradesResponse) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v StockTradesResponse) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *StockTradesResponse) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *StockTradesResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(l, v)
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient7(in *jlexer.Lexer, out *Trade) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -70,9 +706,9 @@ func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang(in *jlexer.Lexer, out 
 					out.Conditions = (out.Conditions)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v1 int32
-					v1 = int32(in.Int32())
-					out.Conditions = append(out.Conditions, v1)
+					var v16 int32
+					v16 = int32(in.Int32())
+					out.Conditions = append(out.Conditions, v16)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -93,7 +729,7 @@ func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang(in *jlexer.Lexer, out 
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang(out *jwriter.Writer, in Trade) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient7(out *jwriter.Writer, in Trade) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -149,11 +785,11 @@ func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang(out *jwriter.Writer, i
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v2, v3 := range in.Conditions {
-				if v2 > 0 {
+			for v17, v18 := range in.Conditions {
+				if v17 > 0 {
 					out.RawByte(',')
 				}
-				out.Int32(int32(v3))
+				out.Int32(int32(v18))
 			}
 			out.RawByte(']')
 		}
@@ -175,1395 +811,7 @@ func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang(out *jwriter.Writer, i
 	}
 	out.RawByte('}')
 }
-
-// MarshalJSON supports json.Marshaler interface
-func (v Trade) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v Trade) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *Trade) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *Trade) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang1(in *jlexer.Lexer, out *TickerOptions) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "Sort":
-			out.Sort = TickerSort(in.String())
-		case "Type":
-			out.Type = string(in.String())
-		case "Market":
-			out.Market = Market(in.String())
-		case "Locale":
-			out.Locale = Locale(in.String())
-		case "Search":
-			out.Search = string(in.String())
-		case "PerPage":
-			out.PerPage = int32(in.Int32())
-		case "Page":
-			out.Page = int32(in.Int32())
-		case "Active":
-			out.Active = bool(in.Bool())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang1(out *jwriter.Writer, in TickerOptions) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"Sort\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Sort))
-	}
-	{
-		const prefix string = ",\"Type\":"
-		out.RawString(prefix)
-		out.String(string(in.Type))
-	}
-	{
-		const prefix string = ",\"Market\":"
-		out.RawString(prefix)
-		out.String(string(in.Market))
-	}
-	{
-		const prefix string = ",\"Locale\":"
-		out.RawString(prefix)
-		out.String(string(in.Locale))
-	}
-	{
-		const prefix string = ",\"Search\":"
-		out.RawString(prefix)
-		out.String(string(in.Search))
-	}
-	{
-		const prefix string = ",\"PerPage\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.PerPage))
-	}
-	{
-		const prefix string = ",\"Page\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.Page))
-	}
-	{
-		const prefix string = ",\"Active\":"
-		out.RawString(prefix)
-		out.Bool(bool(in.Active))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v TickerOptions) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang1(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v TickerOptions) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang1(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *TickerOptions) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang1(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *TickerOptions) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang1(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang2(in *jlexer.Lexer, out *TickerNews) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "symbols":
-			if in.IsNull() {
-				in.Skip()
-				out.Symbols = nil
-			} else {
-				in.Delim('[')
-				if out.Symbols == nil {
-					if !in.IsDelim(']') {
-						out.Symbols = make([]string, 0, 4)
-					} else {
-						out.Symbols = []string{}
-					}
-				} else {
-					out.Symbols = (out.Symbols)[:0]
-				}
-				for !in.IsDelim(']') {
-					var v4 string
-					v4 = string(in.String())
-					out.Symbols = append(out.Symbols, v4)
-					in.WantComma()
-				}
-				in.Delim(']')
-			}
-		case "title":
-			out.Title = string(in.String())
-		case "url":
-			out.URL = string(in.String())
-		case "source":
-			out.Source = string(in.String())
-		case "summary":
-			out.Summary = string(in.String())
-		case "image":
-			out.Image = string(in.String())
-		case "timestamp":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.Timestamp).UnmarshalJSON(data))
-			}
-		case "keywords":
-			if in.IsNull() {
-				in.Skip()
-				out.Keywords = nil
-			} else {
-				in.Delim('[')
-				if out.Keywords == nil {
-					if !in.IsDelim(']') {
-						out.Keywords = make([]string, 0, 4)
-					} else {
-						out.Keywords = []string{}
-					}
-				} else {
-					out.Keywords = (out.Keywords)[:0]
-				}
-				for !in.IsDelim(']') {
-					var v5 string
-					v5 = string(in.String())
-					out.Keywords = append(out.Keywords, v5)
-					in.WantComma()
-				}
-				in.Delim(']')
-			}
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang2(out *jwriter.Writer, in TickerNews) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"symbols\":"
-		out.RawString(prefix[1:])
-		if in.Symbols == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
-			out.RawByte('[')
-			for v6, v7 := range in.Symbols {
-				if v6 > 0 {
-					out.RawByte(',')
-				}
-				out.String(string(v7))
-			}
-			out.RawByte(']')
-		}
-	}
-	{
-		const prefix string = ",\"title\":"
-		out.RawString(prefix)
-		out.String(string(in.Title))
-	}
-	{
-		const prefix string = ",\"url\":"
-		out.RawString(prefix)
-		out.String(string(in.URL))
-	}
-	{
-		const prefix string = ",\"source\":"
-		out.RawString(prefix)
-		out.String(string(in.Source))
-	}
-	{
-		const prefix string = ",\"summary\":"
-		out.RawString(prefix)
-		out.String(string(in.Summary))
-	}
-	{
-		const prefix string = ",\"image\":"
-		out.RawString(prefix)
-		out.String(string(in.Image))
-	}
-	{
-		const prefix string = ",\"timestamp\":"
-		out.RawString(prefix)
-		out.Raw((in.Timestamp).MarshalJSON())
-	}
-	{
-		const prefix string = ",\"keywords\":"
-		out.RawString(prefix)
-		if in.Keywords == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
-			out.RawByte('[')
-			for v8, v9 := range in.Keywords {
-				if v8 > 0 {
-					out.RawByte(',')
-				}
-				out.String(string(v9))
-			}
-			out.RawByte(']')
-		}
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v TickerNews) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang2(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v TickerNews) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang2(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *TickerNews) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang2(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *TickerNews) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang2(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang3(in *jlexer.Lexer, out *TickerDetails) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "logo":
-			out.Logo = string(in.String())
-		case "listdate":
-			out.ListDate = string(in.String())
-		case "cik":
-			out.CIK = string(in.String())
-		case "bloomberg":
-			out.Bloomberg = string(in.String())
-		case "figi":
-			out.FIGI = string(in.String())
-		case "lei":
-			out.LEI = string(in.String())
-		case "sic":
-			out.SIC = int32(in.Int32())
-		case "country":
-			out.Country = string(in.String())
-		case "industry":
-			out.Industry = string(in.String())
-		case "sector":
-			out.Sector = string(in.String())
-		case "marketcap":
-			out.MarketCap = int64(in.Int64())
-		case "employees":
-			out.Employees = int64(in.Int64())
-		case "phone":
-			out.Phone = string(in.String())
-		case "ceo":
-			out.CEO = string(in.String())
-		case "url":
-			out.URL = string(in.String())
-		case "description":
-			out.Description = string(in.String())
-		case "exchange":
-			out.Exchange = string(in.String())
-		case "name":
-			out.Name = string(in.String())
-		case "symbol":
-			out.Symbol = string(in.String())
-		case "exchangeSymbol":
-			out.ExchangeSymbol = string(in.String())
-		case "hq_address":
-			out.HQAddress = string(in.String())
-		case "hq_state":
-			out.HQState = string(in.String())
-		case "hq_country":
-			out.HQCountry = string(in.String())
-		case "type":
-			out.Type = string(in.String())
-		case "updated":
-			out.Updated = string(in.String())
-		case "tags":
-			if in.IsNull() {
-				in.Skip()
-				out.Tags = nil
-			} else {
-				in.Delim('[')
-				if out.Tags == nil {
-					if !in.IsDelim(']') {
-						out.Tags = make([]string, 0, 4)
-					} else {
-						out.Tags = []string{}
-					}
-				} else {
-					out.Tags = (out.Tags)[:0]
-				}
-				for !in.IsDelim(']') {
-					var v10 string
-					v10 = string(in.String())
-					out.Tags = append(out.Tags, v10)
-					in.WantComma()
-				}
-				in.Delim(']')
-			}
-		case "similar":
-			if in.IsNull() {
-				in.Skip()
-				out.Similar = nil
-			} else {
-				in.Delim('[')
-				if out.Similar == nil {
-					if !in.IsDelim(']') {
-						out.Similar = make([]string, 0, 4)
-					} else {
-						out.Similar = []string{}
-					}
-				} else {
-					out.Similar = (out.Similar)[:0]
-				}
-				for !in.IsDelim(']') {
-					var v11 string
-					v11 = string(in.String())
-					out.Similar = append(out.Similar, v11)
-					in.WantComma()
-				}
-				in.Delim(']')
-			}
-		case "active":
-			out.Active = bool(in.Bool())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang3(out *jwriter.Writer, in TickerDetails) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"logo\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Logo))
-	}
-	{
-		const prefix string = ",\"listdate\":"
-		out.RawString(prefix)
-		out.String(string(in.ListDate))
-	}
-	{
-		const prefix string = ",\"cik\":"
-		out.RawString(prefix)
-		out.String(string(in.CIK))
-	}
-	{
-		const prefix string = ",\"bloomberg\":"
-		out.RawString(prefix)
-		out.String(string(in.Bloomberg))
-	}
-	{
-		const prefix string = ",\"figi\":"
-		out.RawString(prefix)
-		out.String(string(in.FIGI))
-	}
-	{
-		const prefix string = ",\"lei\":"
-		out.RawString(prefix)
-		out.String(string(in.LEI))
-	}
-	{
-		const prefix string = ",\"sic\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.SIC))
-	}
-	{
-		const prefix string = ",\"country\":"
-		out.RawString(prefix)
-		out.String(string(in.Country))
-	}
-	{
-		const prefix string = ",\"industry\":"
-		out.RawString(prefix)
-		out.String(string(in.Industry))
-	}
-	{
-		const prefix string = ",\"sector\":"
-		out.RawString(prefix)
-		out.String(string(in.Sector))
-	}
-	{
-		const prefix string = ",\"marketcap\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.MarketCap))
-	}
-	{
-		const prefix string = ",\"employees\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.Employees))
-	}
-	{
-		const prefix string = ",\"phone\":"
-		out.RawString(prefix)
-		out.String(string(in.Phone))
-	}
-	{
-		const prefix string = ",\"ceo\":"
-		out.RawString(prefix)
-		out.String(string(in.CEO))
-	}
-	{
-		const prefix string = ",\"url\":"
-		out.RawString(prefix)
-		out.String(string(in.URL))
-	}
-	{
-		const prefix string = ",\"description\":"
-		out.RawString(prefix)
-		out.String(string(in.Description))
-	}
-	{
-		const prefix string = ",\"exchange\":"
-		out.RawString(prefix)
-		out.String(string(in.Exchange))
-	}
-	{
-		const prefix string = ",\"name\":"
-		out.RawString(prefix)
-		out.String(string(in.Name))
-	}
-	{
-		const prefix string = ",\"symbol\":"
-		out.RawString(prefix)
-		out.String(string(in.Symbol))
-	}
-	{
-		const prefix string = ",\"exchangeSymbol\":"
-		out.RawString(prefix)
-		out.String(string(in.ExchangeSymbol))
-	}
-	{
-		const prefix string = ",\"hq_address\":"
-		out.RawString(prefix)
-		out.String(string(in.HQAddress))
-	}
-	{
-		const prefix string = ",\"hq_state\":"
-		out.RawString(prefix)
-		out.String(string(in.HQState))
-	}
-	{
-		const prefix string = ",\"hq_country\":"
-		out.RawString(prefix)
-		out.String(string(in.HQCountry))
-	}
-	{
-		const prefix string = ",\"type\":"
-		out.RawString(prefix)
-		out.String(string(in.Type))
-	}
-	{
-		const prefix string = ",\"updated\":"
-		out.RawString(prefix)
-		out.String(string(in.Updated))
-	}
-	{
-		const prefix string = ",\"tags\":"
-		out.RawString(prefix)
-		if in.Tags == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
-			out.RawByte('[')
-			for v12, v13 := range in.Tags {
-				if v12 > 0 {
-					out.RawByte(',')
-				}
-				out.String(string(v13))
-			}
-			out.RawByte(']')
-		}
-	}
-	{
-		const prefix string = ",\"similar\":"
-		out.RawString(prefix)
-		if in.Similar == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
-			out.RawByte('[')
-			for v14, v15 := range in.Similar {
-				if v14 > 0 {
-					out.RawByte(',')
-				}
-				out.String(string(v15))
-			}
-			out.RawByte(']')
-		}
-	}
-	{
-		const prefix string = ",\"active\":"
-		out.RawString(prefix)
-		out.Bool(bool(in.Active))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v TickerDetails) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang3(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v TickerDetails) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang3(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *TickerDetails) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang3(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *TickerDetails) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang3(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang4(in *jlexer.Lexer, out *Ticker) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "ticker":
-			out.Ticker = string(in.String())
-		case "name":
-			out.Name = string(in.String())
-		case "market":
-			out.Market = string(in.String())
-		case "locale":
-			out.Locale = Locale(in.String())
-		case "type":
-			out.Type = string(in.String())
-		case "currency":
-			out.Currency = string(in.String())
-		case "active":
-			out.Active = bool(in.Bool())
-		case "primaryExch":
-			out.PrimaryExch = string(in.String())
-		case "updated":
-			out.Updated = string(in.String())
-		case "codes":
-			if in.IsNull() {
-				in.Skip()
-				out.Codes = nil
-			} else {
-				if out.Codes == nil {
-					out.Codes = new(CodesMap)
-				}
-				if in.IsNull() {
-					in.Skip()
-				} else {
-					in.Delim('{')
-					if !in.IsDelim('}') {
-						*out.Codes = make(CodesMap)
-					} else {
-						*out.Codes = nil
-					}
-					for !in.IsDelim('}') {
-						key := string(in.String())
-						in.WantColon()
-						var v16 string
-						v16 = string(in.String())
-						(*out.Codes)[key] = v16
-						in.WantComma()
-					}
-					in.Delim('}')
-				}
-			}
-		case "attrs":
-			if in.IsNull() {
-				in.Skip()
-				out.Attrs = nil
-			} else {
-				if out.Attrs == nil {
-					out.Attrs = new(AttrsMap)
-				}
-				if in.IsNull() {
-					in.Skip()
-				} else {
-					in.Delim('{')
-					if !in.IsDelim('}') {
-						*out.Attrs = make(AttrsMap)
-					} else {
-						*out.Attrs = nil
-					}
-					for !in.IsDelim('}') {
-						key := string(in.String())
-						in.WantColon()
-						var v17 interface{}
-						if m, ok := v17.(easyjson.Unmarshaler); ok {
-							m.UnmarshalEasyJSON(in)
-						} else if m, ok := v17.(json.Unmarshaler); ok {
-							_ = m.UnmarshalJSON(in.Raw())
-						} else {
-							v17 = in.Interface()
-						}
-						(*out.Attrs)[key] = v17
-						in.WantComma()
-					}
-					in.Delim('}')
-				}
-			}
-		case "url":
-			out.URL = string(in.String())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang4(out *jwriter.Writer, in Ticker) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"ticker\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Ticker))
-	}
-	{
-		const prefix string = ",\"name\":"
-		out.RawString(prefix)
-		out.String(string(in.Name))
-	}
-	{
-		const prefix string = ",\"market\":"
-		out.RawString(prefix)
-		out.String(string(in.Market))
-	}
-	{
-		const prefix string = ",\"locale\":"
-		out.RawString(prefix)
-		out.String(string(in.Locale))
-	}
-	{
-		const prefix string = ",\"type\":"
-		out.RawString(prefix)
-		out.String(string(in.Type))
-	}
-	{
-		const prefix string = ",\"currency\":"
-		out.RawString(prefix)
-		out.String(string(in.Currency))
-	}
-	{
-		const prefix string = ",\"active\":"
-		out.RawString(prefix)
-		out.Bool(bool(in.Active))
-	}
-	{
-		const prefix string = ",\"primaryExch\":"
-		out.RawString(prefix)
-		out.String(string(in.PrimaryExch))
-	}
-	{
-		const prefix string = ",\"updated\":"
-		out.RawString(prefix)
-		out.String(string(in.Updated))
-	}
-	if in.Codes != nil {
-		const prefix string = ",\"codes\":"
-		out.RawString(prefix)
-		if *in.Codes == nil && (out.Flags&jwriter.NilMapAsEmpty) == 0 {
-			out.RawString(`null`)
-		} else {
-			out.RawByte('{')
-			v18First := true
-			for v18Name, v18Value := range *in.Codes {
-				if v18First {
-					v18First = false
-				} else {
-					out.RawByte(',')
-				}
-				out.String(string(v18Name))
-				out.RawByte(':')
-				out.String(string(v18Value))
-			}
-			out.RawByte('}')
-		}
-	}
-	if in.Attrs != nil {
-		const prefix string = ",\"attrs\":"
-		out.RawString(prefix)
-		if *in.Attrs == nil && (out.Flags&jwriter.NilMapAsEmpty) == 0 {
-			out.RawString(`null`)
-		} else {
-			out.RawByte('{')
-			v19First := true
-			for v19Name, v19Value := range *in.Attrs {
-				if v19First {
-					v19First = false
-				} else {
-					out.RawByte(',')
-				}
-				out.String(string(v19Name))
-				out.RawByte(':')
-				if m, ok := v19Value.(easyjson.Marshaler); ok {
-					m.MarshalEasyJSON(out)
-				} else if m, ok := v19Value.(json.Marshaler); ok {
-					out.Raw(m.MarshalJSON())
-				} else {
-					out.Raw(json.Marshal(v19Value))
-				}
-			}
-			out.RawByte('}')
-		}
-	}
-	{
-		const prefix string = ",\"url\":"
-		out.RawString(prefix)
-		out.String(string(in.URL))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v Ticker) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang4(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v Ticker) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang4(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *Ticker) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang4(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *Ticker) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang4(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang5(in *jlexer.Lexer, out *StreamTrade) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "sym":
-			out.Symbol = string(in.String())
-		case "x":
-			out.Exchange = int(in.Int())
-		case "i":
-			out.TradeID = string(in.String())
-		case "p":
-			out.Price = float64(in.Float64())
-		case "s":
-			out.Size = int64(in.Int64())
-		case "t":
-			out.Timestamp = int64(in.Int64())
-		case "c":
-			if in.IsNull() {
-				in.Skip()
-				out.Conditions = nil
-			} else {
-				in.Delim('[')
-				if out.Conditions == nil {
-					if !in.IsDelim(']') {
-						out.Conditions = make([]int, 0, 8)
-					} else {
-						out.Conditions = []int{}
-					}
-				} else {
-					out.Conditions = (out.Conditions)[:0]
-				}
-				for !in.IsDelim(']') {
-					var v20 int
-					v20 = int(in.Int())
-					out.Conditions = append(out.Conditions, v20)
-					in.WantComma()
-				}
-				in.Delim(']')
-			}
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang5(out *jwriter.Writer, in StreamTrade) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"sym\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Symbol))
-	}
-	{
-		const prefix string = ",\"x\":"
-		out.RawString(prefix)
-		out.Int(int(in.Exchange))
-	}
-	{
-		const prefix string = ",\"i\":"
-		out.RawString(prefix)
-		out.String(string(in.TradeID))
-	}
-	{
-		const prefix string = ",\"p\":"
-		out.RawString(prefix)
-		out.Float64(float64(in.Price))
-	}
-	{
-		const prefix string = ",\"s\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.Size))
-	}
-	{
-		const prefix string = ",\"t\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.Timestamp))
-	}
-	{
-		const prefix string = ",\"c\":"
-		out.RawString(prefix)
-		if in.Conditions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
-			out.RawByte('[')
-			for v21, v22 := range in.Conditions {
-				if v21 > 0 {
-					out.RawByte(',')
-				}
-				out.Int(int(v22))
-			}
-			out.RawByte(']')
-		}
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v StreamTrade) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang5(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v StreamTrade) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang5(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *StreamTrade) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang5(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *StreamTrade) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang5(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang6(in *jlexer.Lexer, out *StreamQuote) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "sym":
-			out.Symbol = string(in.String())
-		case "c":
-			out.Condition = int(in.Int())
-		case "bx":
-			out.BidExchange = int(in.Int())
-		case "ax":
-			out.AskExchange = int(in.Int())
-		case "bp":
-			out.BidPrice = float64(in.Float64())
-		case "ap":
-			out.AskPrice = float64(in.Float64())
-		case "bs":
-			out.BidSize = int64(in.Int64())
-		case "as":
-			out.AskSize = int64(in.Int64())
-		case "t":
-			out.Timestamp = int64(in.Int64())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang6(out *jwriter.Writer, in StreamQuote) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"sym\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Symbol))
-	}
-	{
-		const prefix string = ",\"c\":"
-		out.RawString(prefix)
-		out.Int(int(in.Condition))
-	}
-	{
-		const prefix string = ",\"bx\":"
-		out.RawString(prefix)
-		out.Int(int(in.BidExchange))
-	}
-	{
-		const prefix string = ",\"ax\":"
-		out.RawString(prefix)
-		out.Int(int(in.AskExchange))
-	}
-	{
-		const prefix string = ",\"bp\":"
-		out.RawString(prefix)
-		out.Float64(float64(in.BidPrice))
-	}
-	{
-		const prefix string = ",\"ap\":"
-		out.RawString(prefix)
-		out.Float64(float64(in.AskPrice))
-	}
-	{
-		const prefix string = ",\"bs\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.BidSize))
-	}
-	{
-		const prefix string = ",\"as\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.AskSize))
-	}
-	{
-		const prefix string = ",\"t\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.Timestamp))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v StreamQuote) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang6(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v StreamQuote) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang6(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *StreamQuote) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang6(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *StreamQuote) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang6(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang7(in *jlexer.Lexer, out *StreamAggregate) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "ev":
-			out.Event = string(in.String())
-		case "sym":
-			out.Symbol = string(in.String())
-		case "v":
-			out.Volume = int(in.Int())
-		case "av":
-			out.AccumulatedVolume = int(in.Int())
-		case "op":
-			out.OpeningPrice = float64(in.Float64())
-		case "vw":
-			out.VWAP = float64(in.Float64())
-		case "o":
-			out.OpenPrice = float64(in.Float64())
-		case "c":
-			out.ClosePrice = float64(in.Float64())
-		case "h":
-			out.HighPrice = float64(in.Float64())
-		case "l":
-			out.LowPrice = float64(in.Float64())
-		case "a":
-			out.Average = float64(in.Float64())
-		case "s":
-			out.StartTimestamp = int64(in.Int64())
-		case "e":
-			out.EndTimestamp = int64(in.Int64())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang7(out *jwriter.Writer, in StreamAggregate) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"ev\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Event))
-	}
-	{
-		const prefix string = ",\"sym\":"
-		out.RawString(prefix)
-		out.String(string(in.Symbol))
-	}
-	{
-		const prefix string = ",\"v\":"
-		out.RawString(prefix)
-		out.Int(int(in.Volume))
-	}
-	{
-		const prefix string = ",\"av\":"
-		out.RawString(prefix)
-		out.Int(int(in.AccumulatedVolume))
-	}
-	{
-		const prefix string = ",\"op\":"
-		out.RawString(prefix)
-		out.Float64(float64(in.OpeningPrice))
-	}
-	{
-		const prefix string = ",\"vw\":"
-		out.RawString(prefix)
-		out.Float64(float64(in.VWAP))
-	}
-	{
-		const prefix string = ",\"o\":"
-		out.RawString(prefix)
-		out.Float64(float64(in.OpenPrice))
-	}
-	{
-		const prefix string = ",\"c\":"
-		out.RawString(prefix)
-		out.Float64(float64(in.ClosePrice))
-	}
-	{
-		const prefix string = ",\"h\":"
-		out.RawString(prefix)
-		out.Float64(float64(in.HighPrice))
-	}
-	{
-		const prefix string = ",\"l\":"
-		out.RawString(prefix)
-		out.Float64(float64(in.LowPrice))
-	}
-	{
-		const prefix string = ",\"a\":"
-		out.RawString(prefix)
-		out.Float64(float64(in.Average))
-	}
-	{
-		const prefix string = ",\"s\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.StartTimestamp))
-	}
-	{
-		const prefix string = ",\"e\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.EndTimestamp))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v StreamAggregate) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang7(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v StreamAggregate) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang7(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *StreamAggregate) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang7(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *StreamAggregate) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang7(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang8(in *jlexer.Lexer, out *StockTradesResponse) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "results":
-			if in.IsNull() {
-				in.Skip()
-				out.Results = nil
-			} else {
-				in.Delim('[')
-				if out.Results == nil {
-					if !in.IsDelim(']') {
-						out.Results = make(Trades, 0, 0)
-					} else {
-						out.Results = Trades{}
-					}
-				} else {
-					out.Results = (out.Results)[:0]
-				}
-				for !in.IsDelim(']') {
-					var v23 Trade
-					(v23).UnmarshalEasyJSON(in)
-					out.Results = append(out.Results, v23)
-					in.WantComma()
-				}
-				in.Delim(']')
-			}
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang8(out *jwriter.Writer, in StockTradesResponse) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"results\":"
-		out.RawString(prefix[1:])
-		if in.Results == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
-			out.RawByte('[')
-			for v24, v25 := range in.Results {
-				if v24 > 0 {
-					out.RawByte(',')
-				}
-				(v25).MarshalEasyJSON(out)
-			}
-			out.RawByte(']')
-		}
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v StockTradesResponse) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang8(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v StockTradesResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang8(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *StockTradesResponse) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang8(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *StockTradesResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang8(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang9(in *jlexer.Lexer, out *StockSnapshotsResponse) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient8(in *jlexer.Lexer, out *StockSnapshotsResponse) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1598,9 +846,9 @@ func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang9(in *jlexer.Lexer, out
 					out.Results = (out.Results)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v26 Snapshot
-					(v26).UnmarshalEasyJSON(in)
-					out.Results = append(out.Results, v26)
+					var v19 Snapshot
+					easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient9(in, &v19)
+					out.Results = append(out.Results, v19)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1615,7 +863,7 @@ func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang9(in *jlexer.Lexer, out
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang9(out *jwriter.Writer, in StockSnapshotsResponse) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient8(out *jwriter.Writer, in StockSnapshotsResponse) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1626,11 +874,11 @@ func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang9(out *jwriter.Writer, 
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v27, v28 := range in.Results {
-				if v27 > 0 {
+			for v20, v21 := range in.Results {
+				if v20 > 0 {
 					out.RawByte(',')
 				}
-				(v28).MarshalEasyJSON(out)
+				easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient9(out, v21)
 			}
 			out.RawByte(']')
 		}
@@ -1641,338 +889,27 @@ func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang9(out *jwriter.Writer, 
 // MarshalJSON supports json.Marshaler interface
 func (v StockSnapshotsResponse) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang9(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient8(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v StockSnapshotsResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang9(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient8(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *StockSnapshotsResponse) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang9(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient8(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *StockSnapshotsResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang9(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient8(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang10(in *jlexer.Lexer, out *StockQuotesResponse) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "results":
-			if in.IsNull() {
-				in.Skip()
-				out.Results = nil
-			} else {
-				in.Delim('[')
-				if out.Results == nil {
-					if !in.IsDelim(']') {
-						out.Results = make(Quotes, 0, 0)
-					} else {
-						out.Results = Quotes{}
-					}
-				} else {
-					out.Results = (out.Results)[:0]
-				}
-				for !in.IsDelim(']') {
-					var v29 Quote
-					(v29).UnmarshalEasyJSON(in)
-					out.Results = append(out.Results, v29)
-					in.WantComma()
-				}
-				in.Delim(']')
-			}
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang10(out *jwriter.Writer, in StockQuotesResponse) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"results\":"
-		out.RawString(prefix[1:])
-		if in.Results == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
-			out.RawByte('[')
-			for v30, v31 := range in.Results {
-				if v30 > 0 {
-					out.RawByte(',')
-				}
-				(v31).MarshalEasyJSON(out)
-			}
-			out.RawByte(']')
-		}
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v StockQuotesResponse) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang10(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v StockQuotesResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang10(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *StockQuotesResponse) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang10(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *StockQuotesResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang10(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang11(in *jlexer.Lexer, out *StockBarsResponse) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "results":
-			if in.IsNull() {
-				in.Skip()
-				out.Results = nil
-			} else {
-				in.Delim('[')
-				if out.Results == nil {
-					if !in.IsDelim(']') {
-						out.Results = make(Bars, 0, 1)
-					} else {
-						out.Results = Bars{}
-					}
-				} else {
-					out.Results = (out.Results)[:0]
-				}
-				for !in.IsDelim(']') {
-					var v32 Bar
-					(v32).UnmarshalEasyJSON(in)
-					out.Results = append(out.Results, v32)
-					in.WantComma()
-				}
-				in.Delim(']')
-			}
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang11(out *jwriter.Writer, in StockBarsResponse) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"results\":"
-		out.RawString(prefix[1:])
-		if in.Results == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
-			out.RawByte('[')
-			for v33, v34 := range in.Results {
-				if v33 > 0 {
-					out.RawByte(',')
-				}
-				(v34).MarshalEasyJSON(out)
-			}
-			out.RawByte(']')
-		}
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v StockBarsResponse) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang11(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v StockBarsResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang11(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *StockBarsResponse) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang11(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *StockBarsResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang11(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang12(in *jlexer.Lexer, out *Split) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "ticker":
-			out.Ticker = string(in.String())
-		case "exDate":
-			out.ExDate = string(in.String())
-		case "paymentDate":
-			out.PaymentDate = string(in.String())
-		case "recordDate":
-			out.RecorDate = string(in.String())
-		case "declaredDate":
-			out.DeclearedDate = string(in.String())
-		case "ratio":
-			out.Ratio = float32(in.Float32())
-		case "tofactor":
-			out.ToFactor = int32(in.Int32())
-		case "forfactor":
-			out.ForFactor = int32(in.Int32())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang12(out *jwriter.Writer, in Split) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"ticker\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Ticker))
-	}
-	{
-		const prefix string = ",\"exDate\":"
-		out.RawString(prefix)
-		out.String(string(in.ExDate))
-	}
-	{
-		const prefix string = ",\"paymentDate\":"
-		out.RawString(prefix)
-		out.String(string(in.PaymentDate))
-	}
-	{
-		const prefix string = ",\"recordDate\":"
-		out.RawString(prefix)
-		out.String(string(in.RecorDate))
-	}
-	{
-		const prefix string = ",\"declaredDate\":"
-		out.RawString(prefix)
-		out.String(string(in.DeclearedDate))
-	}
-	{
-		const prefix string = ",\"ratio\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Ratio))
-	}
-	{
-		const prefix string = ",\"tofactor\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.ToFactor))
-	}
-	{
-		const prefix string = ",\"forfactor\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.ForFactor))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v Split) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang12(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v Split) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang12(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *Split) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang12(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *Split) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang12(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang13(in *jlexer.Lexer, out *Snapshot) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient9(in *jlexer.Lexer, out *Snapshot) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1998,15 +935,15 @@ func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang13(in *jlexer.Lexer, ou
 		case "todaysChangePerc":
 			out.TodayChangePct = float32(in.Float32())
 		case "day":
-			(out.Day).UnmarshalEasyJSON(in)
+			easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient10(in, &out.Day)
 		case "prevDay":
-			(out.PrevDay).UnmarshalEasyJSON(in)
+			easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient10(in, &out.PrevDay)
 		case "lastQuote":
-			(out.LastQuote).UnmarshalEasyJSON(in)
+			easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient11(in, &out.LastQuote)
 		case "lastTrade":
-			(out.LastTrade).UnmarshalEasyJSON(in)
+			easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient12(in, &out.LastTrade)
 		case "min":
-			(out.Min).UnmarshalEasyJSON(in)
+			easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient10(in, &out.Min)
 		case "updated":
 			out.Updated = int64(in.Int64())
 		default:
@@ -2019,7 +956,7 @@ func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang13(in *jlexer.Lexer, ou
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang13(out *jwriter.Writer, in Snapshot) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient9(out *jwriter.Writer, in Snapshot) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -2041,27 +978,27 @@ func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang13(out *jwriter.Writer,
 	{
 		const prefix string = ",\"day\":"
 		out.RawString(prefix)
-		(in.Day).MarshalEasyJSON(out)
+		easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient10(out, in.Day)
 	}
 	{
 		const prefix string = ",\"prevDay\":"
 		out.RawString(prefix)
-		(in.PrevDay).MarshalEasyJSON(out)
+		easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient10(out, in.PrevDay)
 	}
 	{
 		const prefix string = ",\"lastQuote\":"
 		out.RawString(prefix)
-		(in.LastQuote).MarshalEasyJSON(out)
+		easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient11(out, in.LastQuote)
 	}
 	{
 		const prefix string = ",\"lastTrade\":"
 		out.RawString(prefix)
-		(in.LastTrade).MarshalEasyJSON(out)
+		easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient12(out, in.LastTrade)
 	}
 	{
 		const prefix string = ",\"min\":"
 		out.RawString(prefix)
-		(in.Min).MarshalEasyJSON(out)
+		easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient10(out, in.Min)
 	}
 	{
 		const prefix string = ",\"updated\":"
@@ -2070,1032 +1007,7 @@ func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang13(out *jwriter.Writer,
 	}
 	out.RawByte('}')
 }
-
-// MarshalJSON supports json.Marshaler interface
-func (v Snapshot) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang13(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v Snapshot) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang13(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *Snapshot) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang13(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *Snapshot) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang13(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang14(in *jlexer.Lexer, out *RequestOptions) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "Unadjusted":
-			out.Unadjusted = Unadjusted(in.String())
-		case "Sort":
-			out.Sort = Sort(in.String())
-		case "Timestamp":
-			out.Timestamp = int64(in.Int64())
-		case "TimestampLimit":
-			out.TimestampLimit = int64(in.Int64())
-		case "Reverse":
-			out.Reverse = Reverse(in.String())
-		case "Limit":
-			out.Limit = int64(in.Int64())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang14(out *jwriter.Writer, in RequestOptions) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"Unadjusted\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Unadjusted))
-	}
-	{
-		const prefix string = ",\"Sort\":"
-		out.RawString(prefix)
-		out.String(string(in.Sort))
-	}
-	{
-		const prefix string = ",\"Timestamp\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.Timestamp))
-	}
-	{
-		const prefix string = ",\"TimestampLimit\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.TimestampLimit))
-	}
-	{
-		const prefix string = ",\"Reverse\":"
-		out.RawString(prefix)
-		out.String(string(in.Reverse))
-	}
-	{
-		const prefix string = ",\"Limit\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.Limit))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v RequestOptions) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang14(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v RequestOptions) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang14(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *RequestOptions) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang14(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *RequestOptions) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang14(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang15(in *jlexer.Lexer, out *Quote) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "y":
-			out.ExTime = int64(in.Int64())
-		case "t":
-			out.SIPTime = int64(in.Int64())
-		case "f":
-			out.TRFTime = int64(in.Int64())
-		case "q":
-			out.Sequence = int32(in.Int32())
-		case "c":
-			if in.IsNull() {
-				in.Skip()
-				out.Conditions = nil
-			} else {
-				in.Delim('[')
-				if out.Conditions == nil {
-					if !in.IsDelim(']') {
-						out.Conditions = make([]int32, 0, 16)
-					} else {
-						out.Conditions = []int32{}
-					}
-				} else {
-					out.Conditions = (out.Conditions)[:0]
-				}
-				for !in.IsDelim(']') {
-					var v35 int32
-					v35 = int32(in.Int32())
-					out.Conditions = append(out.Conditions, v35)
-					in.WantComma()
-				}
-				in.Delim(']')
-			}
-		case "i":
-			if in.IsNull() {
-				in.Skip()
-				out.Indicators = nil
-			} else {
-				in.Delim('[')
-				if out.Indicators == nil {
-					if !in.IsDelim(']') {
-						out.Indicators = make([]int32, 0, 16)
-					} else {
-						out.Indicators = []int32{}
-					}
-				} else {
-					out.Indicators = (out.Indicators)[:0]
-				}
-				for !in.IsDelim(']') {
-					var v36 int32
-					v36 = int32(in.Int32())
-					out.Indicators = append(out.Indicators, v36)
-					in.WantComma()
-				}
-				in.Delim(']')
-			}
-		case "p":
-			out.BidPrice = float64(in.Float64())
-		case "x":
-			out.BidExchange = int32(in.Int32())
-		case "s":
-			out.BidSize = int32(in.Int32())
-		case "P":
-			out.AskPrice = float64(in.Float64())
-		case "X":
-			out.AskExchange = int32(in.Int32())
-		case "S":
-			out.AskSize = int32(in.Int32())
-		case "z":
-			out.ListedEx = int32(in.Int32())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang15(out *jwriter.Writer, in Quote) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"y\":"
-		out.RawString(prefix[1:])
-		out.Int64(int64(in.ExTime))
-	}
-	{
-		const prefix string = ",\"t\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.SIPTime))
-	}
-	{
-		const prefix string = ",\"f\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.TRFTime))
-	}
-	{
-		const prefix string = ",\"q\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.Sequence))
-	}
-	{
-		const prefix string = ",\"c\":"
-		out.RawString(prefix)
-		if in.Conditions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
-			out.RawByte('[')
-			for v37, v38 := range in.Conditions {
-				if v37 > 0 {
-					out.RawByte(',')
-				}
-				out.Int32(int32(v38))
-			}
-			out.RawByte(']')
-		}
-	}
-	{
-		const prefix string = ",\"i\":"
-		out.RawString(prefix)
-		if in.Indicators == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
-			out.RawByte('[')
-			for v39, v40 := range in.Indicators {
-				if v39 > 0 {
-					out.RawByte(',')
-				}
-				out.Int32(int32(v40))
-			}
-			out.RawByte(']')
-		}
-	}
-	{
-		const prefix string = ",\"p\":"
-		out.RawString(prefix)
-		out.Float64(float64(in.BidPrice))
-	}
-	{
-		const prefix string = ",\"x\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.BidExchange))
-	}
-	{
-		const prefix string = ",\"s\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.BidSize))
-	}
-	{
-		const prefix string = ",\"P\":"
-		out.RawString(prefix)
-		out.Float64(float64(in.AskPrice))
-	}
-	{
-		const prefix string = ",\"X\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.AskExchange))
-	}
-	{
-		const prefix string = ",\"S\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.AskSize))
-	}
-	{
-		const prefix string = ",\"z\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.ListedEx))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v Quote) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang15(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v Quote) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang15(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *Quote) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang15(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *Quote) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang15(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang16(in *jlexer.Lexer, out *PolygonClientMsg) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "action":
-			out.Action = string(in.String())
-		case "params":
-			out.Params = string(in.String())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang16(out *jwriter.Writer, in PolygonClientMsg) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"action\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Action))
-	}
-	{
-		const prefix string = ",\"params\":"
-		out.RawString(prefix)
-		out.String(string(in.Params))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v PolygonClientMsg) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang16(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v PolygonClientMsg) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang16(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *PolygonClientMsg) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang16(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *PolygonClientMsg) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang16(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang17(in *jlexer.Lexer, out *PolygonAuthMsg) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "ev":
-			out.Event = string(in.String())
-		case "status":
-			out.Status = string(in.String())
-		case "message":
-			out.Message = string(in.String())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang17(out *jwriter.Writer, in PolygonAuthMsg) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"ev\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Event))
-	}
-	{
-		const prefix string = ",\"status\":"
-		out.RawString(prefix)
-		out.String(string(in.Status))
-	}
-	{
-		const prefix string = ",\"message\":"
-		out.RawString(prefix)
-		out.String(string(in.Message))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v PolygonAuthMsg) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang17(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v PolygonAuthMsg) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang17(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *PolygonAuthMsg) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang17(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *PolygonAuthMsg) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang17(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang18(in *jlexer.Lexer, out *PolgyonServerMsg) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "ev":
-			out.Event = string(in.String())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang18(out *jwriter.Writer, in PolgyonServerMsg) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"ev\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Event))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v PolgyonServerMsg) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang18(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v PolgyonServerMsg) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang18(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *PolgyonServerMsg) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang18(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *PolgyonServerMsg) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang18(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang19(in *jlexer.Lexer, out *NewsOptions) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "PerPage":
-			out.PerPage = int32(in.Int32())
-		case "Page":
-			out.Page = int32(in.Int32())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang19(out *jwriter.Writer, in NewsOptions) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"PerPage\":"
-		out.RawString(prefix[1:])
-		out.Int32(int32(in.PerPage))
-	}
-	{
-		const prefix string = ",\"Page\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.Page))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v NewsOptions) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang19(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v NewsOptions) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang19(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *NewsOptions) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang19(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *NewsOptions) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang19(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang20(in *jlexer.Lexer, out *MarketStatus) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "market":
-			out.Market = string(in.String())
-		case "serverTime":
-			out.ServerTime = string(in.String())
-		case "exchanges":
-			if in.IsNull() {
-				in.Skip()
-			} else {
-				in.Delim('{')
-				out.Exchanges = make(map[string]string)
-				for !in.IsDelim('}') {
-					key := string(in.String())
-					in.WantColon()
-					var v41 string
-					v41 = string(in.String())
-					(out.Exchanges)[key] = v41
-					in.WantComma()
-				}
-				in.Delim('}')
-			}
-		case "currencies":
-			if in.IsNull() {
-				in.Skip()
-			} else {
-				in.Delim('{')
-				out.Currencies = make(map[string]string)
-				for !in.IsDelim('}') {
-					key := string(in.String())
-					in.WantColon()
-					var v42 string
-					v42 = string(in.String())
-					(out.Currencies)[key] = v42
-					in.WantComma()
-				}
-				in.Delim('}')
-			}
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang20(out *jwriter.Writer, in MarketStatus) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"market\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Market))
-	}
-	{
-		const prefix string = ",\"serverTime\":"
-		out.RawString(prefix)
-		out.String(string(in.ServerTime))
-	}
-	{
-		const prefix string = ",\"exchanges\":"
-		out.RawString(prefix)
-		if in.Exchanges == nil && (out.Flags&jwriter.NilMapAsEmpty) == 0 {
-			out.RawString(`null`)
-		} else {
-			out.RawByte('{')
-			v43First := true
-			for v43Name, v43Value := range in.Exchanges {
-				if v43First {
-					v43First = false
-				} else {
-					out.RawByte(',')
-				}
-				out.String(string(v43Name))
-				out.RawByte(':')
-				out.String(string(v43Value))
-			}
-			out.RawByte('}')
-		}
-	}
-	{
-		const prefix string = ",\"currencies\":"
-		out.RawString(prefix)
-		if in.Currencies == nil && (out.Flags&jwriter.NilMapAsEmpty) == 0 {
-			out.RawString(`null`)
-		} else {
-			out.RawByte('{')
-			v44First := true
-			for v44Name, v44Value := range in.Currencies {
-				if v44First {
-					v44First = false
-				} else {
-					out.RawByte(',')
-				}
-				out.String(string(v44Name))
-				out.RawByte(':')
-				out.String(string(v44Value))
-			}
-			out.RawByte('}')
-		}
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v MarketStatus) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang20(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v MarketStatus) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang20(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *MarketStatus) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang20(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *MarketStatus) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang20(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang21(in *jlexer.Lexer, out *MarketHoliday) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "exchange":
-			out.Exchange = string(in.String())
-		case "name":
-			out.Name = string(in.String())
-		case "status":
-			out.Status = string(in.String())
-		case "date":
-			out.Date = string(in.String())
-		case "open":
-			out.Open = string(in.String())
-		case "close":
-			out.Close = string(in.String())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang21(out *jwriter.Writer, in MarketHoliday) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"exchange\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Exchange))
-	}
-	{
-		const prefix string = ",\"name\":"
-		out.RawString(prefix)
-		out.String(string(in.Name))
-	}
-	{
-		const prefix string = ",\"status\":"
-		out.RawString(prefix)
-		out.String(string(in.Status))
-	}
-	{
-		const prefix string = ",\"date\":"
-		out.RawString(prefix)
-		out.String(string(in.Date))
-	}
-	{
-		const prefix string = ",\"open\":"
-		out.RawString(prefix)
-		out.String(string(in.Open))
-	}
-	{
-		const prefix string = ",\"close\":"
-		out.RawString(prefix)
-		out.String(string(in.Close))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v MarketHoliday) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang21(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v MarketHoliday) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang21(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *MarketHoliday) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang21(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *MarketHoliday) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang21(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang22(in *jlexer.Lexer, out *MarketDescription) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "market":
-			out.Name = Market(in.String())
-		case "desc":
-			out.Description = string(in.String())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang22(out *jwriter.Writer, in MarketDescription) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"market\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Name))
-	}
-	{
-		const prefix string = ",\"desc\":"
-		out.RawString(prefix)
-		out.String(string(in.Description))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v MarketDescription) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang22(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v MarketDescription) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang22(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *MarketDescription) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang22(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *MarketDescription) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang22(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang23(in *jlexer.Lexer, out *LocaleName) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "locale":
-			out.Locale = Locale(in.String())
-		case "name":
-			out.Name = string(in.String())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang23(out *jwriter.Writer, in LocaleName) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"locale\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Locale))
-	}
-	{
-		const prefix string = ",\"name\":"
-		out.RawString(prefix)
-		out.String(string(in.Name))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v LocaleName) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang23(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v LocaleName) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang23(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *LocaleName) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang23(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *LocaleName) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang23(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang24(in *jlexer.Lexer, out *LastTrade) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient12(in *jlexer.Lexer, out *LastTrade) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -3134,7 +1046,7 @@ func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang24(in *jlexer.Lexer, ou
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang24(out *jwriter.Writer, in LastTrade) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient12(out *jwriter.Writer, in LastTrade) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -3165,31 +1077,7 @@ func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang24(out *jwriter.Writer,
 	}
 	out.RawByte('}')
 }
-
-// MarshalJSON supports json.Marshaler interface
-func (v LastTrade) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang24(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v LastTrade) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang24(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *LastTrade) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang24(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *LastTrade) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang24(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang25(in *jlexer.Lexer, out *LastQuote) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient11(in *jlexer.Lexer, out *LastQuote) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -3232,7 +1120,7 @@ func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang25(in *jlexer.Lexer, ou
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang25(out *jwriter.Writer, in LastQuote) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient11(out *jwriter.Writer, in LastQuote) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -3273,1705 +1161,7 @@ func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang25(out *jwriter.Writer,
 	}
 	out.RawByte('}')
 }
-
-// MarshalJSON supports json.Marshaler interface
-func (v LastQuote) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang25(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v LastQuote) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang25(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *LastQuote) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang25(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *LastQuote) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang25(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang26(in *jlexer.Lexer, out *FinancialOptions) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "Limit":
-			out.Limit = int32(in.Int32())
-		case "Type":
-			out.Type = FinancialOptionType(in.String())
-		case "Sort":
-			out.Sort = FinancialOptionSort(in.String())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang26(out *jwriter.Writer, in FinancialOptions) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"Limit\":"
-		out.RawString(prefix[1:])
-		out.Int32(int32(in.Limit))
-	}
-	{
-		const prefix string = ",\"Type\":"
-		out.RawString(prefix)
-		out.String(string(in.Type))
-	}
-	{
-		const prefix string = ",\"Sort\":"
-		out.RawString(prefix)
-		out.String(string(in.Sort))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v FinancialOptions) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang26(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v FinancialOptions) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang26(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *FinancialOptions) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang26(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *FinancialOptions) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang26(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang27(in *jlexer.Lexer, out *Financial) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "ticker":
-			out.Ticker = string(in.String())
-		case "period":
-			out.Period = string(in.String())
-		case "calendarDate":
-			out.CalendarDate = string(in.String())
-		case "reportPeriod":
-			out.ReportPeriod = string(in.String())
-		case "updated":
-			out.Updated = string(in.String())
-		case "accumulatedOtherComprehensiveIncome":
-			out.AccumulatedOtherComprehensiveIncom = float32(in.Float32())
-		case "assets":
-			out.Asset = float32(in.Float32())
-		case "assetsAverage":
-			out.AssetAverage = float32(in.Float32())
-		case "assetsCurrent":
-			out.AssetCurrent = float32(in.Float32())
-		case "assetTurnover":
-			out.AssetTurnOver = float32(in.Float32())
-		case "assetsNonCurrent":
-			out.AssetNonCurrent = float32(in.Float32())
-		case "bookValuePerShare":
-			out.BookValuePerShare = float32(in.Float32())
-		case "capitalExpenditure":
-			out.CapitalExpenditure = float32(in.Float32())
-		case "cashAndEquivalents":
-			out.CashAndEquivalents = float32(in.Float32())
-		case "cashAndEquivalentsUSD":
-			out.CashAndEquivalentsUSD = float32(in.Float32())
-		case "costOfRevenue":
-			out.CostOfRevenue = float32(in.Float32())
-		case "consolidatedIncome":
-			out.ConsolidatedIncome = float32(in.Float32())
-		case "currentRatio":
-			out.CurrentRatio = float32(in.Float32())
-		case "debtToEquityRatio":
-			out.DebtToEquityRatio = float32(in.Float32())
-		case "debt":
-			out.Debt = float32(in.Float32())
-		case "debtCurrent":
-			out.DebtCurrent = float32(in.Float32())
-		case "debtNonCurrent":
-			out.DebtNonCurrent = float32(in.Float32())
-		case "debtUSD":
-			out.DebtUSD = float32(in.Float32())
-		case "deferredRevenue":
-			out.DeferredRevenue = float32(in.Float32())
-		case "depreciationAmortizationAndAccretion":
-			out.DepreciationAmortizationAndAccretion = float32(in.Float32())
-		case "deposits":
-			out.Deposits = float32(in.Float32())
-		case "dividendYield":
-			out.DividentdYield = float32(in.Float32())
-		case "dividendsPerBasicCommonShare":
-			out.DividendsPerBasicCommonShare = float32(in.Float32())
-		case "earningBeforeInterestTaxes":
-			out.EarningBeforeInterestTaxes = float32(in.Float32())
-		case "earningsBeforeInterestTaxesDepreciationAmortization":
-			out.EarningsBeforeInterestTaxesDepreciationAmortization = float32(in.Float32())
-		case "EBITDAMargin":
-			out.EBITDAMargin = float32(in.Float32())
-		case "earningsBeforeInterestTaxesDepreciationAmortizationUSD":
-			out.EarningsBeforeInterestTaxesDepreciationAmortizationUSD = float32(in.Float32())
-		case "earningBeforeInterestTaxesUSD":
-			out.EarningBeforeInterestTaxesUSD = float32(in.Float32())
-		case "earningsBeforeTax":
-			out.EarningsBeforeTax = float32(in.Float32())
-		case "earningsPerBasicShare":
-			out.EarningsPerBasicShare = float32(in.Float32())
-		case "earningsPerDilutedShare":
-			out.EarningsPerDilutedShare = float32(in.Float32())
-		case "earningsPerBasicShareUSD":
-			out.EarningsPerBasicShareUSD = float32(in.Float32())
-		case "shareholdersEquity":
-			out.ShareholdersEquity = float32(in.Float32())
-		case "everageEquity":
-			out.EverageEquity = float32(in.Float32())
-		case "shareholdersEquityUSD":
-			out.ShareholdersEquityUSD = float32(in.Float32())
-		case "enterpriseValue":
-			out.EnterpriseValue = float32(in.Float32())
-		case "enterpriseValueOverEBIT":
-			out.EnterpriseValueOverEBIT = float32(in.Float32())
-		case "enterpriseValueOverEBITDA":
-			out.EnterpriseValueOverEBITDA = float32(in.Float32())
-		case "freeCashFlow":
-			out.FreeCashFlow = float32(in.Float32())
-		case "freeCashFlowPerShare":
-			out.FreeCashFlowPerShare = float32(in.Float32())
-		case "foreignCurrencyUSDExchangeRate":
-			out.ForeignCurrencyUSDExchangeRate = float32(in.Float32())
-		case "grossProfit":
-			out.GrossProfit = float32(in.Float32())
-		case "grossMargin":
-			out.GrossMargin = float32(in.Float32())
-		case "goodwillAndIntangibleAssets":
-			out.GoodwillAndIntangibleAssets = float32(in.Float32())
-		case "interestExpense":
-			out.InterestExpense = float32(in.Float32())
-		case "investedCapital":
-			out.InvestedCapital = float32(in.Float32())
-		case "investedCapitalAverage":
-			out.InvestedCapitalAverage = float32(in.Float32())
-		case "inventory":
-			out.Inventory = float32(in.Float32())
-		case "investments":
-			out.Investments = float32(in.Float32())
-		case "investmentsCurrent":
-			out.InvestmentsCurrent = float32(in.Float32())
-		case "investmentsNonCurrent":
-			out.InvestmentsNonCurrent = float32(in.Float32())
-		case "totalLiabilities":
-			out.TotalLiabilities = float32(in.Float32())
-		case "currentLiabilities":
-			out.CurrentLiabilities = float32(in.Float32())
-		case "liabilitiesNonCurrent":
-			out.LiabilitiesNonCurrent = float32(in.Float32())
-		case "marketCapitalization":
-			out.MarketCapitalization = float32(in.Float32())
-		case "netCashFlow":
-			out.NetCashFlow = float32(in.Float32())
-		case "netCashFlowBusinessAcquisitionsDisposals":
-			out.NetCashFlowBusinessAcquisitionsDisposals = float32(in.Float32())
-		case "issuanceEquityShares":
-			out.IssuanceEquityShares = float32(in.Float32())
-		case "issuanceDebtSecurities":
-			out.IssuanceDebtSecurities = float32(in.Float32())
-		case "paymentDividendsOtherCashDistributions":
-			out.PaymentDividendsOtherCashDistributions = float32(in.Float32())
-		case "netCashFlowFromFinancing":
-			out.NetCashFlowFromFinancing = float32(in.Float32())
-		case "netCashFlowFromInvesting":
-			out.NetCashFlowFromInvesting = float32(in.Float32())
-		case "netCashFlowInvestmentAcquisitionsDisposals":
-			out.NetCashFlowInvestmentAcquisitionsDisposals = float32(in.Float32())
-		case "netCashFlowFromOperations":
-			out.NetCashFlowFromOperations = float32(in.Float32())
-		case "effectOfExchangeRateChangesOnCash":
-			out.EffectOfExchangeRateChangesOnCash = float32(in.Float32())
-		case "netIncome":
-			out.NetIncome = float32(in.Float32())
-		case "netIncomeCommonStock":
-			out.NetIncomeCommonStock = float32(in.Float32())
-		case "netIncomeCommonStockUSD":
-			out.NetIncomeCommonStockUSD = float32(in.Float32())
-		case "netLossIncomeFromDiscontinuedOperations":
-			out.NetLossIncomeFromDiscontinuedOperations = float32(in.Float32())
-		case "netIncomeToNonControllingInterests":
-			out.NetIncomeToNonControllingInterests = float32(in.Float32())
-		case "profitMargin":
-			out.ProfitMargin = float32(in.Float32())
-		case "operatingExpenses":
-			out.OperatingExpenses = float32(in.Float32())
-		case "operatingIncome":
-			out.OperatingIncome = float32(in.Float32())
-		case "tradeAndNonTradePayables":
-			out.TradeAndNonTradePayables = float32(in.Float32())
-		case "payoutRatio":
-			out.PayoutRatio = float32(in.Float32())
-		case "priceToBookValue":
-			out.PriceToBookValue = float32(in.Float32())
-		case "priceEarnings":
-			out.PriceEarnings = float32(in.Float32())
-		case "priceToEarningsRatio":
-			out.PriceToEarningsRatio = float32(in.Float32())
-		case "propertyPlantEquipmentNet":
-			out.PropertyPlantEquipmentNet = float32(in.Float32())
-		case "preferredDividendsIncomeStatementImpact":
-			out.PreferredDividendsIncomeStatementImpact = float32(in.Float32())
-		case "sharePriceAdjustedClose":
-			out.SharePriceAdjustedClose = float32(in.Float32())
-		case "priceSales":
-			out.PriceSales = float32(in.Float32())
-		case "priceToSalesRatio":
-			out.PriceToSalesRatio = float32(in.Float32())
-		case "tradeAndNonTradeReceivables":
-			out.TradeAndNonTradeReceivables = float32(in.Float32())
-		case "accumulatedRetainedEarningsDeficit":
-			out.AccumulatedRetainedEarningsDeficit = float32(in.Float32())
-		case "revenues":
-			out.Revenues = float32(in.Float32())
-		case "revenuesUSD":
-			out.RevenuesUSD = float32(in.Float32())
-		case "researchAndDevelopmentExpense":
-			out.ResearchAndDevelopmentExpense = float32(in.Float32())
-		case "returnOnAverageAssets":
-			out.ReturnOnAverageAssets = float32(in.Float32())
-		case "returnOnAverageEquity":
-			out.ReturnOnAverageEquity = float32(in.Float32())
-		case "returnOnInvestedCapital":
-			out.ReturnOnInvestedCapital = float32(in.Float32())
-		case "returnOnSales":
-			out.ReturnOnSales = float32(in.Float32())
-		case "shareBasedCompensation":
-			out.ShareBasedCompensation = float32(in.Float32())
-		case "sellingGeneralAndAdministrativeExpense":
-			out.SellingGeneralAndAdministrativeExpense = float32(in.Float32())
-		case "shareFactor":
-			out.ShareFactor = float32(in.Float32())
-		case "shares":
-			out.Shares = float32(in.Float32())
-		case "weightedAverageShares":
-			out.WeightedAverageShares = float32(in.Float32())
-		case "weightedAverageSharesDiluted":
-			out.WeightedAverageSharesDiluted = float32(in.Float32())
-		case "salesPerShare":
-			out.SalesPerShare = float32(in.Float32())
-		case "tangibleAssetValue":
-			out.TangibleAssetValue = float32(in.Float32())
-		case "taxAssets":
-			out.TaxAssets = float32(in.Float32())
-		case "incomeTaxExpense":
-			out.IncomeTaxExpense = float32(in.Float32())
-		case "taxLiabilities":
-			out.TaxLiabilities = float32(in.Float32())
-		case "tangibleAssetsBookValuePerShare":
-			out.TangibleAssetsBookValuePerShare = float32(in.Float32())
-		case "workingCapital":
-			out.WorkingCapital = float32(in.Float32())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang27(out *jwriter.Writer, in Financial) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"ticker\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Ticker))
-	}
-	{
-		const prefix string = ",\"period\":"
-		out.RawString(prefix)
-		out.String(string(in.Period))
-	}
-	{
-		const prefix string = ",\"calendarDate\":"
-		out.RawString(prefix)
-		out.String(string(in.CalendarDate))
-	}
-	{
-		const prefix string = ",\"reportPeriod\":"
-		out.RawString(prefix)
-		out.String(string(in.ReportPeriod))
-	}
-	{
-		const prefix string = ",\"updated\":"
-		out.RawString(prefix)
-		out.String(string(in.Updated))
-	}
-	{
-		const prefix string = ",\"accumulatedOtherComprehensiveIncome\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.AccumulatedOtherComprehensiveIncom))
-	}
-	{
-		const prefix string = ",\"assets\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Asset))
-	}
-	{
-		const prefix string = ",\"assetsAverage\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.AssetAverage))
-	}
-	{
-		const prefix string = ",\"assetsCurrent\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.AssetCurrent))
-	}
-	{
-		const prefix string = ",\"assetTurnover\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.AssetTurnOver))
-	}
-	{
-		const prefix string = ",\"assetsNonCurrent\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.AssetNonCurrent))
-	}
-	{
-		const prefix string = ",\"bookValuePerShare\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.BookValuePerShare))
-	}
-	{
-		const prefix string = ",\"capitalExpenditure\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.CapitalExpenditure))
-	}
-	{
-		const prefix string = ",\"cashAndEquivalents\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.CashAndEquivalents))
-	}
-	{
-		const prefix string = ",\"cashAndEquivalentsUSD\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.CashAndEquivalentsUSD))
-	}
-	{
-		const prefix string = ",\"costOfRevenue\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.CostOfRevenue))
-	}
-	{
-		const prefix string = ",\"consolidatedIncome\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.ConsolidatedIncome))
-	}
-	{
-		const prefix string = ",\"currentRatio\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.CurrentRatio))
-	}
-	{
-		const prefix string = ",\"debtToEquityRatio\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.DebtToEquityRatio))
-	}
-	{
-		const prefix string = ",\"debt\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Debt))
-	}
-	{
-		const prefix string = ",\"debtCurrent\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.DebtCurrent))
-	}
-	{
-		const prefix string = ",\"debtNonCurrent\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.DebtNonCurrent))
-	}
-	{
-		const prefix string = ",\"debtUSD\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.DebtUSD))
-	}
-	{
-		const prefix string = ",\"deferredRevenue\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.DeferredRevenue))
-	}
-	{
-		const prefix string = ",\"depreciationAmortizationAndAccretion\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.DepreciationAmortizationAndAccretion))
-	}
-	{
-		const prefix string = ",\"deposits\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Deposits))
-	}
-	{
-		const prefix string = ",\"dividendYield\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.DividentdYield))
-	}
-	{
-		const prefix string = ",\"dividendsPerBasicCommonShare\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.DividendsPerBasicCommonShare))
-	}
-	{
-		const prefix string = ",\"earningBeforeInterestTaxes\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EarningBeforeInterestTaxes))
-	}
-	{
-		const prefix string = ",\"earningsBeforeInterestTaxesDepreciationAmortization\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EarningsBeforeInterestTaxesDepreciationAmortization))
-	}
-	{
-		const prefix string = ",\"EBITDAMargin\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EBITDAMargin))
-	}
-	{
-		const prefix string = ",\"earningsBeforeInterestTaxesDepreciationAmortizationUSD\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EarningsBeforeInterestTaxesDepreciationAmortizationUSD))
-	}
-	{
-		const prefix string = ",\"earningBeforeInterestTaxesUSD\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EarningBeforeInterestTaxesUSD))
-	}
-	{
-		const prefix string = ",\"earningsBeforeTax\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EarningsBeforeTax))
-	}
-	{
-		const prefix string = ",\"earningsPerBasicShare\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EarningsPerBasicShare))
-	}
-	{
-		const prefix string = ",\"earningsPerDilutedShare\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EarningsPerDilutedShare))
-	}
-	{
-		const prefix string = ",\"earningsPerBasicShareUSD\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EarningsPerBasicShareUSD))
-	}
-	{
-		const prefix string = ",\"shareholdersEquity\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.ShareholdersEquity))
-	}
-	{
-		const prefix string = ",\"everageEquity\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EverageEquity))
-	}
-	{
-		const prefix string = ",\"shareholdersEquityUSD\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.ShareholdersEquityUSD))
-	}
-	{
-		const prefix string = ",\"enterpriseValue\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EnterpriseValue))
-	}
-	{
-		const prefix string = ",\"enterpriseValueOverEBIT\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EnterpriseValueOverEBIT))
-	}
-	{
-		const prefix string = ",\"enterpriseValueOverEBITDA\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EnterpriseValueOverEBITDA))
-	}
-	{
-		const prefix string = ",\"freeCashFlow\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.FreeCashFlow))
-	}
-	{
-		const prefix string = ",\"freeCashFlowPerShare\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.FreeCashFlowPerShare))
-	}
-	{
-		const prefix string = ",\"foreignCurrencyUSDExchangeRate\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.ForeignCurrencyUSDExchangeRate))
-	}
-	{
-		const prefix string = ",\"grossProfit\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.GrossProfit))
-	}
-	{
-		const prefix string = ",\"grossMargin\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.GrossMargin))
-	}
-	{
-		const prefix string = ",\"goodwillAndIntangibleAssets\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.GoodwillAndIntangibleAssets))
-	}
-	{
-		const prefix string = ",\"interestExpense\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.InterestExpense))
-	}
-	{
-		const prefix string = ",\"investedCapital\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.InvestedCapital))
-	}
-	{
-		const prefix string = ",\"investedCapitalAverage\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.InvestedCapitalAverage))
-	}
-	{
-		const prefix string = ",\"inventory\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Inventory))
-	}
-	{
-		const prefix string = ",\"investments\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Investments))
-	}
-	{
-		const prefix string = ",\"investmentsCurrent\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.InvestmentsCurrent))
-	}
-	{
-		const prefix string = ",\"investmentsNonCurrent\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.InvestmentsNonCurrent))
-	}
-	{
-		const prefix string = ",\"totalLiabilities\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.TotalLiabilities))
-	}
-	{
-		const prefix string = ",\"currentLiabilities\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.CurrentLiabilities))
-	}
-	{
-		const prefix string = ",\"liabilitiesNonCurrent\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.LiabilitiesNonCurrent))
-	}
-	{
-		const prefix string = ",\"marketCapitalization\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.MarketCapitalization))
-	}
-	{
-		const prefix string = ",\"netCashFlow\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.NetCashFlow))
-	}
-	{
-		const prefix string = ",\"netCashFlowBusinessAcquisitionsDisposals\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.NetCashFlowBusinessAcquisitionsDisposals))
-	}
-	{
-		const prefix string = ",\"issuanceEquityShares\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.IssuanceEquityShares))
-	}
-	{
-		const prefix string = ",\"issuanceDebtSecurities\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.IssuanceDebtSecurities))
-	}
-	{
-		const prefix string = ",\"paymentDividendsOtherCashDistributions\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.PaymentDividendsOtherCashDistributions))
-	}
-	{
-		const prefix string = ",\"netCashFlowFromFinancing\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.NetCashFlowFromFinancing))
-	}
-	{
-		const prefix string = ",\"netCashFlowFromInvesting\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.NetCashFlowFromInvesting))
-	}
-	{
-		const prefix string = ",\"netCashFlowInvestmentAcquisitionsDisposals\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.NetCashFlowInvestmentAcquisitionsDisposals))
-	}
-	{
-		const prefix string = ",\"netCashFlowFromOperations\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.NetCashFlowFromOperations))
-	}
-	{
-		const prefix string = ",\"effectOfExchangeRateChangesOnCash\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.EffectOfExchangeRateChangesOnCash))
-	}
-	{
-		const prefix string = ",\"netIncome\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.NetIncome))
-	}
-	{
-		const prefix string = ",\"netIncomeCommonStock\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.NetIncomeCommonStock))
-	}
-	{
-		const prefix string = ",\"netIncomeCommonStockUSD\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.NetIncomeCommonStockUSD))
-	}
-	{
-		const prefix string = ",\"netLossIncomeFromDiscontinuedOperations\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.NetLossIncomeFromDiscontinuedOperations))
-	}
-	{
-		const prefix string = ",\"netIncomeToNonControllingInterests\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.NetIncomeToNonControllingInterests))
-	}
-	{
-		const prefix string = ",\"profitMargin\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.ProfitMargin))
-	}
-	{
-		const prefix string = ",\"operatingExpenses\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.OperatingExpenses))
-	}
-	{
-		const prefix string = ",\"operatingIncome\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.OperatingIncome))
-	}
-	{
-		const prefix string = ",\"tradeAndNonTradePayables\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.TradeAndNonTradePayables))
-	}
-	{
-		const prefix string = ",\"payoutRatio\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.PayoutRatio))
-	}
-	{
-		const prefix string = ",\"priceToBookValue\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.PriceToBookValue))
-	}
-	{
-		const prefix string = ",\"priceEarnings\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.PriceEarnings))
-	}
-	{
-		const prefix string = ",\"priceToEarningsRatio\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.PriceToEarningsRatio))
-	}
-	{
-		const prefix string = ",\"propertyPlantEquipmentNet\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.PropertyPlantEquipmentNet))
-	}
-	{
-		const prefix string = ",\"preferredDividendsIncomeStatementImpact\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.PreferredDividendsIncomeStatementImpact))
-	}
-	{
-		const prefix string = ",\"sharePriceAdjustedClose\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.SharePriceAdjustedClose))
-	}
-	{
-		const prefix string = ",\"priceSales\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.PriceSales))
-	}
-	{
-		const prefix string = ",\"priceToSalesRatio\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.PriceToSalesRatio))
-	}
-	{
-		const prefix string = ",\"tradeAndNonTradeReceivables\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.TradeAndNonTradeReceivables))
-	}
-	{
-		const prefix string = ",\"accumulatedRetainedEarningsDeficit\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.AccumulatedRetainedEarningsDeficit))
-	}
-	{
-		const prefix string = ",\"revenues\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Revenues))
-	}
-	{
-		const prefix string = ",\"revenuesUSD\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.RevenuesUSD))
-	}
-	{
-		const prefix string = ",\"researchAndDevelopmentExpense\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.ResearchAndDevelopmentExpense))
-	}
-	{
-		const prefix string = ",\"returnOnAverageAssets\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.ReturnOnAverageAssets))
-	}
-	{
-		const prefix string = ",\"returnOnAverageEquity\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.ReturnOnAverageEquity))
-	}
-	{
-		const prefix string = ",\"returnOnInvestedCapital\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.ReturnOnInvestedCapital))
-	}
-	{
-		const prefix string = ",\"returnOnSales\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.ReturnOnSales))
-	}
-	{
-		const prefix string = ",\"shareBasedCompensation\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.ShareBasedCompensation))
-	}
-	{
-		const prefix string = ",\"sellingGeneralAndAdministrativeExpense\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.SellingGeneralAndAdministrativeExpense))
-	}
-	{
-		const prefix string = ",\"shareFactor\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.ShareFactor))
-	}
-	{
-		const prefix string = ",\"shares\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Shares))
-	}
-	{
-		const prefix string = ",\"weightedAverageShares\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.WeightedAverageShares))
-	}
-	{
-		const prefix string = ",\"weightedAverageSharesDiluted\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.WeightedAverageSharesDiluted))
-	}
-	{
-		const prefix string = ",\"salesPerShare\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.SalesPerShare))
-	}
-	{
-		const prefix string = ",\"tangibleAssetValue\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.TangibleAssetValue))
-	}
-	{
-		const prefix string = ",\"taxAssets\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.TaxAssets))
-	}
-	{
-		const prefix string = ",\"incomeTaxExpense\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.IncomeTaxExpense))
-	}
-	{
-		const prefix string = ",\"taxLiabilities\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.TaxLiabilities))
-	}
-	{
-		const prefix string = ",\"tangibleAssetsBookValuePerShare\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.TangibleAssetsBookValuePerShare))
-	}
-	{
-		const prefix string = ",\"workingCapital\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.WorkingCapital))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v Financial) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang27(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v Financial) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang27(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *Financial) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang27(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *Financial) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang27(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang28(in *jlexer.Lexer, out *Exchange) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "id":
-			out.ID = int32(in.Int32())
-		case "type":
-			out.Type = string(in.String())
-		case "market":
-			out.Market = string(in.String())
-		case "mic":
-			out.Mic = string(in.String())
-		case "name":
-			out.Name = string(in.String())
-		case "tape":
-			out.Tape = string(in.String())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang28(out *jwriter.Writer, in Exchange) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"id\":"
-		out.RawString(prefix[1:])
-		out.Int32(int32(in.ID))
-	}
-	{
-		const prefix string = ",\"type\":"
-		out.RawString(prefix)
-		out.String(string(in.Type))
-	}
-	{
-		const prefix string = ",\"market\":"
-		out.RawString(prefix)
-		out.String(string(in.Market))
-	}
-	{
-		const prefix string = ",\"mic\":"
-		out.RawString(prefix)
-		out.String(string(in.Mic))
-	}
-	{
-		const prefix string = ",\"name\":"
-		out.RawString(prefix)
-		out.String(string(in.Name))
-	}
-	{
-		const prefix string = ",\"tape\":"
-		out.RawString(prefix)
-		out.String(string(in.Tape))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v Exchange) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang28(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v Exchange) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang28(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *Exchange) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang28(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *Exchange) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang28(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang29(in *jlexer.Lexer, out *Dividend) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "ticker":
-			out.Ticker = string(in.String())
-		case "type":
-			out.Type = string(in.String())
-		case "exDate":
-			out.ExDate = string(in.String())
-		case "paymentDate":
-			out.PaymentDate = string(in.String())
-		case "recordDate":
-			out.RecorDate = string(in.String())
-		case "declaredDate":
-			out.DeclearedDate = string(in.String())
-		case "amount":
-			out.Amount = float32(in.Float32())
-		case "qualified":
-			out.Qualified = string(in.String())
-		case "flag":
-			out.Flag = string(in.String())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang29(out *jwriter.Writer, in Dividend) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"ticker\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Ticker))
-	}
-	{
-		const prefix string = ",\"type\":"
-		out.RawString(prefix)
-		out.String(string(in.Type))
-	}
-	{
-		const prefix string = ",\"exDate\":"
-		out.RawString(prefix)
-		out.String(string(in.ExDate))
-	}
-	{
-		const prefix string = ",\"paymentDate\":"
-		out.RawString(prefix)
-		out.String(string(in.PaymentDate))
-	}
-	{
-		const prefix string = ",\"recordDate\":"
-		out.RawString(prefix)
-		out.String(string(in.RecorDate))
-	}
-	{
-		const prefix string = ",\"declaredDate\":"
-		out.RawString(prefix)
-		out.String(string(in.DeclearedDate))
-	}
-	{
-		const prefix string = ",\"amount\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Amount))
-	}
-	{
-		const prefix string = ",\"qualified\":"
-		out.RawString(prefix)
-		out.String(string(in.Qualified))
-	}
-	{
-		const prefix string = ",\"flag\":"
-		out.RawString(prefix)
-		out.String(string(in.Flag))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v Dividend) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang29(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v Dividend) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang29(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *Dividend) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang29(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *Dividend) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang29(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang30(in *jlexer.Lexer, out *Daily) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "status":
-			out.Status = string(in.String())
-		case "from":
-			out.From = string(in.String())
-		case "symbol":
-			out.Ticker = string(in.String())
-		case "volume":
-			out.Volume = float32(in.Float32())
-		case "open":
-			out.Open = float32(in.Float32())
-		case "close":
-			out.Close = float32(in.Float32())
-		case "high":
-			out.High = float32(in.Float32())
-		case "low":
-			out.Low = float32(in.Float32())
-		case "preMarket":
-			out.PreMarket = float32(in.Float32())
-		case "afterHours":
-			out.AfterHours = float32(in.Float32())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang30(out *jwriter.Writer, in Daily) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"status\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Status))
-	}
-	{
-		const prefix string = ",\"from\":"
-		out.RawString(prefix)
-		out.String(string(in.From))
-	}
-	{
-		const prefix string = ",\"symbol\":"
-		out.RawString(prefix)
-		out.String(string(in.Ticker))
-	}
-	{
-		const prefix string = ",\"volume\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Volume))
-	}
-	{
-		const prefix string = ",\"open\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Open))
-	}
-	{
-		const prefix string = ",\"close\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Close))
-	}
-	{
-		const prefix string = ",\"high\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.High))
-	}
-	{
-		const prefix string = ",\"low\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Low))
-	}
-	{
-		const prefix string = ",\"preMarket\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.PreMarket))
-	}
-	{
-		const prefix string = ",\"afterHours\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.AfterHours))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v Daily) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang30(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v Daily) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang30(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *Daily) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang30(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *Daily) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang30(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang31(in *jlexer.Lexer, out *CryptoTrade) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "p":
-			out.Price = float32(in.Float32())
-		case "s":
-			out.Size = float32(in.Float32())
-		case "x":
-			out.Exchange = int32(in.Int32())
-		case "t":
-			out.Time = int64(in.Int64())
-		case "c":
-			if in.IsNull() {
-				in.Skip()
-				out.Conditions = nil
-			} else {
-				in.Delim('[')
-				if out.Conditions == nil {
-					if !in.IsDelim(']') {
-						out.Conditions = make([]int32, 0, 16)
-					} else {
-						out.Conditions = []int32{}
-					}
-				} else {
-					out.Conditions = (out.Conditions)[:0]
-				}
-				for !in.IsDelim(']') {
-					var v45 int32
-					v45 = int32(in.Int32())
-					out.Conditions = append(out.Conditions, v45)
-					in.WantComma()
-				}
-				in.Delim(']')
-			}
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang31(out *jwriter.Writer, in CryptoTrade) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"p\":"
-		out.RawString(prefix[1:])
-		out.Float32(float32(in.Price))
-	}
-	{
-		const prefix string = ",\"s\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Size))
-	}
-	{
-		const prefix string = ",\"x\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.Exchange))
-	}
-	{
-		const prefix string = ",\"t\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.Time))
-	}
-	{
-		const prefix string = ",\"c\":"
-		out.RawString(prefix)
-		if in.Conditions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
-			out.RawByte('[')
-			for v46, v47 := range in.Conditions {
-				if v46 > 0 {
-					out.RawByte(',')
-				}
-				out.Int32(int32(v47))
-			}
-			out.RawByte(']')
-		}
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v CryptoTrade) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang31(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v CryptoTrade) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang31(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *CryptoTrade) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang31(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *CryptoTrade) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang31(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang32(in *jlexer.Lexer, out *CryptoDaily) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "symbol":
-			out.Ticker = string(in.String())
-		case "isUTC":
-			out.IsUTC = bool(in.Bool())
-		case "day":
-			out.Day = string(in.String())
-		case "open":
-			out.Open = float32(in.Float32())
-		case "close":
-			out.Close = float32(in.Float32())
-		case "openTrades":
-			if in.IsNull() {
-				in.Skip()
-				out.OpenTrades = nil
-			} else {
-				in.Delim('[')
-				if out.OpenTrades == nil {
-					if !in.IsDelim(']') {
-						out.OpenTrades = make(CryptoTrades, 0, 1)
-					} else {
-						out.OpenTrades = CryptoTrades{}
-					}
-				} else {
-					out.OpenTrades = (out.OpenTrades)[:0]
-				}
-				for !in.IsDelim(']') {
-					var v48 CryptoTrade
-					(v48).UnmarshalEasyJSON(in)
-					out.OpenTrades = append(out.OpenTrades, v48)
-					in.WantComma()
-				}
-				in.Delim(']')
-			}
-		case "closingTrades":
-			if in.IsNull() {
-				in.Skip()
-				out.ClosingTrades = nil
-			} else {
-				in.Delim('[')
-				if out.ClosingTrades == nil {
-					if !in.IsDelim(']') {
-						out.ClosingTrades = make(CryptoTrades, 0, 1)
-					} else {
-						out.ClosingTrades = CryptoTrades{}
-					}
-				} else {
-					out.ClosingTrades = (out.ClosingTrades)[:0]
-				}
-				for !in.IsDelim(']') {
-					var v49 CryptoTrade
-					(v49).UnmarshalEasyJSON(in)
-					out.ClosingTrades = append(out.ClosingTrades, v49)
-					in.WantComma()
-				}
-				in.Delim(']')
-			}
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang32(out *jwriter.Writer, in CryptoDaily) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"symbol\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Ticker))
-	}
-	{
-		const prefix string = ",\"isUTC\":"
-		out.RawString(prefix)
-		out.Bool(bool(in.IsUTC))
-	}
-	{
-		const prefix string = ",\"day\":"
-		out.RawString(prefix)
-		out.String(string(in.Day))
-	}
-	{
-		const prefix string = ",\"open\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Open))
-	}
-	{
-		const prefix string = ",\"close\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Close))
-	}
-	{
-		const prefix string = ",\"openTrades\":"
-		out.RawString(prefix)
-		if in.OpenTrades == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
-			out.RawByte('[')
-			for v50, v51 := range in.OpenTrades {
-				if v50 > 0 {
-					out.RawByte(',')
-				}
-				(v51).MarshalEasyJSON(out)
-			}
-			out.RawByte(']')
-		}
-	}
-	{
-		const prefix string = ",\"closingTrades\":"
-		out.RawString(prefix)
-		if in.ClosingTrades == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
-			out.RawByte('[')
-			for v52, v53 := range in.ClosingTrades {
-				if v52 > 0 {
-					out.RawByte(',')
-				}
-				(v53).MarshalEasyJSON(out)
-			}
-			out.RawByte(']')
-		}
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v CryptoDaily) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang32(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v CryptoDaily) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang32(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *CryptoDaily) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang32(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *CryptoDaily) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang32(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang33(in *jlexer.Lexer, out *CommonResponse) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "ticker":
-			out.Ticker = string(in.String())
-		case "status":
-			out.Status = string(in.String())
-		case "adjusted":
-			out.Adjusted = bool(in.Bool())
-		case "query_count":
-			out.QueryCount = int32(in.Int32())
-		case "results_count":
-			out.ResultCount = int32(in.Int32())
-		case "count":
-			out.Count = int32(in.Int32())
-		case "page":
-			out.Page = int32(in.Int32())
-		case "perPage":
-			out.PerPage = int32(in.Int32())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang33(out *jwriter.Writer, in CommonResponse) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"ticker\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Ticker))
-	}
-	{
-		const prefix string = ",\"status\":"
-		out.RawString(prefix)
-		out.String(string(in.Status))
-	}
-	{
-		const prefix string = ",\"adjusted\":"
-		out.RawString(prefix)
-		out.Bool(bool(in.Adjusted))
-	}
-	{
-		const prefix string = ",\"query_count\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.QueryCount))
-	}
-	{
-		const prefix string = ",\"results_count\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.ResultCount))
-	}
-	{
-		const prefix string = ",\"count\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.Count))
-	}
-	{
-		const prefix string = ",\"page\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.Page))
-	}
-	{
-		const prefix string = ",\"perPage\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.PerPage))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v CommonResponse) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang33(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v CommonResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang33(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *CommonResponse) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang33(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *CommonResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang33(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang34(in *jlexer.Lexer, out *Bar) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient10(in *jlexer.Lexer, out *Bar) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -5020,7 +1210,7 @@ func easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang34(in *jlexer.Lexer, ou
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang34(out *jwriter.Writer, in Bar) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient10(out *jwriter.Writer, in Bar) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -5076,27 +1266,531 @@ func easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang34(out *jwriter.Writer,
 	}
 	out.RawByte('}')
 }
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient13(in *jlexer.Lexer, out *StockQuotesResponse) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "results":
+			if in.IsNull() {
+				in.Skip()
+				out.Results = nil
+			} else {
+				in.Delim('[')
+				if out.Results == nil {
+					if !in.IsDelim(']') {
+						out.Results = make(Quotes, 0, 0)
+					} else {
+						out.Results = Quotes{}
+					}
+				} else {
+					out.Results = (out.Results)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v22 Quote
+					easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient14(in, &v22)
+					out.Results = append(out.Results, v22)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient13(out *jwriter.Writer, in StockQuotesResponse) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"results\":"
+		out.RawString(prefix[1:])
+		if in.Results == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v23, v24 := range in.Results {
+				if v23 > 0 {
+					out.RawByte(',')
+				}
+				easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient14(out, v24)
+			}
+			out.RawByte(']')
+		}
+	}
+	out.RawByte('}')
+}
 
 // MarshalJSON supports json.Marshaler interface
-func (v Bar) MarshalJSON() ([]byte, error) {
+func (v StockQuotesResponse) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang34(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient13(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
-func (v Bar) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComPolygonIoClientGolang34(w, v)
+func (v StockQuotesResponse) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient13(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
-func (v *Bar) UnmarshalJSON(data []byte) error {
+func (v *StockQuotesResponse) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang34(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient13(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *Bar) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComPolygonIoClientGolang34(l, v)
+func (v *StockQuotesResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient13(l, v)
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient14(in *jlexer.Lexer, out *Quote) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "y":
+			out.ExTime = int64(in.Int64())
+		case "t":
+			out.SIPTime = int64(in.Int64())
+		case "f":
+			out.TRFTime = int64(in.Int64())
+		case "q":
+			out.Sequence = int32(in.Int32())
+		case "c":
+			if in.IsNull() {
+				in.Skip()
+				out.Conditions = nil
+			} else {
+				in.Delim('[')
+				if out.Conditions == nil {
+					if !in.IsDelim(']') {
+						out.Conditions = make([]int32, 0, 16)
+					} else {
+						out.Conditions = []int32{}
+					}
+				} else {
+					out.Conditions = (out.Conditions)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v25 int32
+					v25 = int32(in.Int32())
+					out.Conditions = append(out.Conditions, v25)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		case "i":
+			if in.IsNull() {
+				in.Skip()
+				out.Indicators = nil
+			} else {
+				in.Delim('[')
+				if out.Indicators == nil {
+					if !in.IsDelim(']') {
+						out.Indicators = make([]int32, 0, 16)
+					} else {
+						out.Indicators = []int32{}
+					}
+				} else {
+					out.Indicators = (out.Indicators)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v26 int32
+					v26 = int32(in.Int32())
+					out.Indicators = append(out.Indicators, v26)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		case "p":
+			out.BidPrice = float64(in.Float64())
+		case "x":
+			out.BidExchange = int32(in.Int32())
+		case "s":
+			out.BidSize = int32(in.Int32())
+		case "P":
+			out.AskPrice = float64(in.Float64())
+		case "X":
+			out.AskExchange = int32(in.Int32())
+		case "S":
+			out.AskSize = int32(in.Int32())
+		case "z":
+			out.ListedEx = int32(in.Int32())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient14(out *jwriter.Writer, in Quote) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"y\":"
+		out.RawString(prefix[1:])
+		out.Int64(int64(in.ExTime))
+	}
+	{
+		const prefix string = ",\"t\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.SIPTime))
+	}
+	{
+		const prefix string = ",\"f\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.TRFTime))
+	}
+	{
+		const prefix string = ",\"q\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Sequence))
+	}
+	{
+		const prefix string = ",\"c\":"
+		out.RawString(prefix)
+		if in.Conditions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v27, v28 := range in.Conditions {
+				if v27 > 0 {
+					out.RawByte(',')
+				}
+				out.Int32(int32(v28))
+			}
+			out.RawByte(']')
+		}
+	}
+	{
+		const prefix string = ",\"i\":"
+		out.RawString(prefix)
+		if in.Indicators == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v29, v30 := range in.Indicators {
+				if v29 > 0 {
+					out.RawByte(',')
+				}
+				out.Int32(int32(v30))
+			}
+			out.RawByte(']')
+		}
+	}
+	{
+		const prefix string = ",\"p\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.BidPrice))
+	}
+	{
+		const prefix string = ",\"x\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.BidExchange))
+	}
+	{
+		const prefix string = ",\"s\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.BidSize))
+	}
+	{
+		const prefix string = ",\"P\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.AskPrice))
+	}
+	{
+		const prefix string = ",\"X\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.AskExchange))
+	}
+	{
+		const prefix string = ",\"S\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.AskSize))
+	}
+	{
+		const prefix string = ",\"z\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.ListedEx))
+	}
+	out.RawByte('}')
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient15(in *jlexer.Lexer, out *StockBarsResponse) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "results":
+			(out.Results).UnmarshalEasyJSON(in)
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient15(out *jwriter.Writer, in StockBarsResponse) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"results\":"
+		out.RawString(prefix[1:])
+		(in.Results).MarshalEasyJSON(out)
+	}
+	out.RawByte('}')
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v StockBarsResponse) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient15(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v StockBarsResponse) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient15(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *StockBarsResponse) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient15(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *StockBarsResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient15(l, v)
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient16(in *jlexer.Lexer, out *PolgyonServerMsges) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		in.Skip()
+		*out = nil
+	} else {
+		in.Delim('[')
+		if *out == nil {
+			if !in.IsDelim(']') {
+				*out = make(PolgyonServerMsges, 0, 4)
+			} else {
+				*out = PolgyonServerMsges{}
+			}
+		} else {
+			*out = (*out)[:0]
+		}
+		for !in.IsDelim(']') {
+			var v31 PolgyonServerMsg
+			easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient17(in, &v31)
+			*out = append(*out, v31)
+			in.WantComma()
+		}
+		in.Delim(']')
+	}
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient16(out *jwriter.Writer, in PolgyonServerMsges) {
+	if in == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+		out.RawString("null")
+	} else {
+		out.RawByte('[')
+		for v32, v33 := range in {
+			if v32 > 0 {
+				out.RawByte(',')
+			}
+			easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient17(out, v33)
+		}
+		out.RawByte(']')
+	}
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v PolgyonServerMsges) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient16(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v PolgyonServerMsges) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient16(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *PolgyonServerMsges) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient16(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *PolgyonServerMsges) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient16(l, v)
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient17(in *jlexer.Lexer, out *PolgyonServerMsg) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "ev":
+			out.Event = string(in.String())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient17(out *jwriter.Writer, in PolgyonServerMsg) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"ev\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.Event))
+	}
+	out.RawByte('}')
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient18(in *jlexer.Lexer, out *Bars) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		in.Skip()
+		*out = nil
+	} else {
+		in.Delim('[')
+		if *out == nil {
+			if !in.IsDelim(']') {
+				*out = make(Bars, 0, 1)
+			} else {
+				*out = Bars{}
+			}
+		} else {
+			*out = (*out)[:0]
+		}
+		for !in.IsDelim(']') {
+			var v34 Bar
+			easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient10(in, &v34)
+			*out = append(*out, v34)
+			in.WantComma()
+		}
+		in.Delim(']')
+	}
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient18(out *jwriter.Writer, in Bars) {
+	if in == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+		out.RawString("null")
+	} else {
+		out.RawByte('[')
+		for v35, v36 := range in {
+			if v35 > 0 {
+				out.RawByte(',')
+			}
+			easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient10(out, v36)
+		}
+		out.RawByte(']')
+	}
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v Bars) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient18(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v Bars) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient18(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *Bars) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient18(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *Bars) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient18(l, v)
 }

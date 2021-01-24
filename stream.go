@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
+	ej "github.com/mailru/easyjson"
 )
 
 const (
@@ -228,4 +229,31 @@ func (s *Stream) reconnect() error {
 		return err
 	}
 	return nil
+}
+
+func ParseEvent(bts []byte) (PolgyonServerMsg, error) {
+	var out PolgyonServerMsges
+	err := ej.Unmarshal(bts, &out)
+	if len(out) > 0 {
+		return out[0], err
+	}
+	return PolgyonServerMsg{}, fmt.Errorf("empty message")
+}
+
+func ParseStreamTrades(bts []byte) (StreamTrades, error) {
+	var out StreamTrades
+	err := ej.Unmarshal(bts, &out)
+	return out, err
+}
+
+func ParseStreamQuotes(bts []byte) (StreamQuotes, error) {
+	var out StreamQuotes
+	err := ej.Unmarshal(bts, &out)
+	return out, err
+}
+
+func ParseStreamAggregates(bts []byte) (StreamAggregates, error) {
+	var out StreamAggregates
+	err := ej.Unmarshal(bts, &out)
+	return out, err
 }
