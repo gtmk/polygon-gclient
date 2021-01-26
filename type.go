@@ -590,7 +590,7 @@ type StreamTrade struct {
 	Symbol     string  `json:"sym"`
 	Exchange   int32   `json:"x"`
 	TradeID    string  `json:"i"`
-	Price      float64 `json:"p"`
+	Price      float32 `json:"p"`
 	Size       int32   `json:"s"`
 	Timestamp  int64   `json:"t"`
 	Conditions []int32 `json:"c"`
@@ -606,10 +606,10 @@ type StreamQuote struct {
 	Condition   int32   `json:"c"`
 	BidExchange int32   `json:"bx"`
 	AskExchange int32   `json:"ax"`
-	BidPrice    float64 `json:"bp"`
-	AskPrice    float64 `json:"ap"`
-	BidSize     int64   `json:"bs"`
-	AskSize     int64   `json:"as"`
+	BidPrice    float32 `json:"bp"`
+	AskPrice    float32 `json:"ap"`
+	BidSize     int32   `json:"bs"`
+	AskSize     int32   `json:"as"`
 	Timestamp   int64   `json:"t"`
 }
 
@@ -623,13 +623,13 @@ type StreamAggregate struct {
 	Symbol            string  `json:"sym"`
 	Volume            int32   `json:"v"`
 	AccumulatedVolume int32   `json:"av"`
-	OpeningPrice      float64 `json:"op"`
-	VWAP              float64 `json:"vw"`
-	OpenPrice         float64 `json:"o"`
-	ClosePrice        float64 `json:"c"`
-	HighPrice         float64 `json:"h"`
-	LowPrice          float64 `json:"l"`
-	Average           float64 `json:"a"`
+	OpeningPrice      float32 `json:"op"`
+	VWAP              float32 `json:"vw"`
+	OpenPrice         float32 `json:"o"`
+	ClosePrice        float32 `json:"c"`
+	HighPrice         float32 `json:"h"`
+	LowPrice          float32 `json:"l"`
+	Average           float32 `json:"a"`
 	StartTimestamp    int64   `json:"s"`
 	EndTimestamp      int64   `json:"e"`
 }

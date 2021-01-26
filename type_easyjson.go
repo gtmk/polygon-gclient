@@ -4,6 +4,7 @@ package polygonio
 
 import (
 	json "encoding/json"
+
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -109,7 +110,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient1(in *jlexer.Lexer, out *S
 		case "i":
 			out.TradeID = string(in.String())
 		case "p":
-			out.Price = float64(in.Float64())
+			out.Price = float32(in.Float32())
 		case "s":
 			out.Size = int32(in.Int32())
 		case "t":
@@ -169,7 +170,7 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient1(out *jwriter.Writer, in 
 	{
 		const prefix string = ",\"p\":"
 		out.RawString(prefix)
-		out.Float64(float64(in.Price))
+		out.Float32(float32(in.Price))
 	}
 	{
 		const prefix string = ",\"s\":"
@@ -208,7 +209,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient2(in *jlexer.Lexer, out *S
 		in.Delim('[')
 		if *out == nil {
 			if !in.IsDelim(']') {
-				*out = make(StreamQuotes, 0, 0)
+				*out = make(StreamQuotes, 0, 1)
 			} else {
 				*out = StreamQuotes{}
 			}
@@ -293,13 +294,13 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient3(in *jlexer.Lexer, out *S
 		case "ax":
 			out.AskExchange = int32(in.Int32())
 		case "bp":
-			out.BidPrice = float64(in.Float64())
+			out.BidPrice = float32(in.Float32())
 		case "ap":
-			out.AskPrice = float64(in.Float64())
+			out.AskPrice = float32(in.Float32())
 		case "bs":
-			out.BidSize = int64(in.Int64())
+			out.BidSize = int32(in.Int32())
 		case "as":
-			out.AskSize = int64(in.Int64())
+			out.AskSize = int32(in.Int32())
 		case "t":
 			out.Timestamp = int64(in.Int64())
 		default:
@@ -339,22 +340,22 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient3(out *jwriter.Writer, in 
 	{
 		const prefix string = ",\"bp\":"
 		out.RawString(prefix)
-		out.Float64(float64(in.BidPrice))
+		out.Float32(float32(in.BidPrice))
 	}
 	{
 		const prefix string = ",\"ap\":"
 		out.RawString(prefix)
-		out.Float64(float64(in.AskPrice))
+		out.Float32(float32(in.AskPrice))
 	}
 	{
 		const prefix string = ",\"bs\":"
 		out.RawString(prefix)
-		out.Int64(int64(in.BidSize))
+		out.Int32(int32(in.BidSize))
 	}
 	{
 		const prefix string = ",\"as\":"
 		out.RawString(prefix)
-		out.Int64(int64(in.AskSize))
+		out.Int32(int32(in.AskSize))
 	}
 	{
 		const prefix string = ",\"t\":"
@@ -457,19 +458,19 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient5(in *jlexer.Lexer, out *S
 		case "av":
 			out.AccumulatedVolume = int32(in.Int32())
 		case "op":
-			out.OpeningPrice = float64(in.Float64())
+			out.OpeningPrice = float32(in.Float32())
 		case "vw":
-			out.VWAP = float64(in.Float64())
+			out.VWAP = float32(in.Float32())
 		case "o":
-			out.OpenPrice = float64(in.Float64())
+			out.OpenPrice = float32(in.Float32())
 		case "c":
-			out.ClosePrice = float64(in.Float64())
+			out.ClosePrice = float32(in.Float32())
 		case "h":
-			out.HighPrice = float64(in.Float64())
+			out.HighPrice = float32(in.Float32())
 		case "l":
-			out.LowPrice = float64(in.Float64())
+			out.LowPrice = float32(in.Float32())
 		case "a":
-			out.Average = float64(in.Float64())
+			out.Average = float32(in.Float32())
 		case "s":
 			out.StartTimestamp = int64(in.Int64())
 		case "e":
@@ -511,37 +512,37 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient5(out *jwriter.Writer, in 
 	{
 		const prefix string = ",\"op\":"
 		out.RawString(prefix)
-		out.Float64(float64(in.OpeningPrice))
+		out.Float32(float32(in.OpeningPrice))
 	}
 	{
 		const prefix string = ",\"vw\":"
 		out.RawString(prefix)
-		out.Float64(float64(in.VWAP))
+		out.Float32(float32(in.VWAP))
 	}
 	{
 		const prefix string = ",\"o\":"
 		out.RawString(prefix)
-		out.Float64(float64(in.OpenPrice))
+		out.Float32(float32(in.OpenPrice))
 	}
 	{
 		const prefix string = ",\"c\":"
 		out.RawString(prefix)
-		out.Float64(float64(in.ClosePrice))
+		out.Float32(float32(in.ClosePrice))
 	}
 	{
 		const prefix string = ",\"h\":"
 		out.RawString(prefix)
-		out.Float64(float64(in.HighPrice))
+		out.Float32(float32(in.HighPrice))
 	}
 	{
 		const prefix string = ",\"l\":"
 		out.RawString(prefix)
-		out.Float64(float64(in.LowPrice))
+		out.Float32(float32(in.LowPrice))
 	}
 	{
 		const prefix string = ",\"a\":"
 		out.RawString(prefix)
-		out.Float64(float64(in.Average))
+		out.Float32(float32(in.Average))
 	}
 	{
 		const prefix string = ",\"s\":"
