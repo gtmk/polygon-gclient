@@ -49,14 +49,14 @@ func GetStream(apiKey, streamEndpoint string) (*Stream, error) {
 		stream.authenticated.Store(false)
 		stream.closed.Store(false)
 	})
-	err := stream.register()
+	err := stream.Register()
 	if err != nil {
 		return nil, err
 	}
 	return stream, nil
 }
 
-func (s *Stream) register() error {
+func (s *Stream) Register() error {
 	var err error
 	if s.conn == nil {
 		s.conn, err = s.openSocket()
@@ -67,13 +67,14 @@ func (s *Stream) register() error {
 	if err = s.auth(); err != nil {
 		return err
 	}
+	go s.start()
 	return nil
 }
 
 func (s *Stream) Subscribe(channel string) error {
-	s.Do(func() {
-		go s.start()
-	})
+	//s.Do(func() {
+	//	go s.start()
+	//})
 	if err := s.sub(channel); err != nil {
 		return err
 	}
@@ -182,12 +183,14 @@ func (s *Stream) start() {
 				err := s.reconnect()
 				if err != nil {
 					s.ErrorC <- err
+					s.conn = nil
 					return
 				}
 				continue
 			} else {
 				s.ErrorC <- err
-				continue
+				s.conn = nil
+				return
 			}
 		}
 		s.MessageC <- bts
