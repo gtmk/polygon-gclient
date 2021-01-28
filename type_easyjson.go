@@ -4,7 +4,6 @@ package polygonio
 
 import (
 	json "encoding/json"
-
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -456,7 +455,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient5(in *jlexer.Lexer, out *S
 		case "v":
 			out.Volume = int32(in.Int32())
 		case "av":
-			out.AccumulatedVolume = int32(in.Int32())
+			out.AccumulatedVolume = int64(in.Int64())
 		case "op":
 			out.OpeningPrice = float32(in.Float32())
 		case "vw":
@@ -507,7 +506,7 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient5(out *jwriter.Writer, in 
 	{
 		const prefix string = ",\"av\":"
 		out.RawString(prefix)
-		out.Int32(int32(in.AccumulatedVolume))
+		out.Int64(int64(in.AccumulatedVolume))
 	}
 	{
 		const prefix string = ",\"op\":"

@@ -622,7 +622,7 @@ type StreamAggregate struct {
 	Event             string  `json:"ev"`
 	Symbol            string  `json:"sym"`
 	Volume            int32   `json:"v"`
-	AccumulatedVolume int32   `json:"av"`
+	AccumulatedVolume int64   `json:"av"`
 	OpeningPrice      float32 `json:"op"`
 	VWAP              float32 `json:"vw"`
 	OpenPrice         float32 `json:"o"`
