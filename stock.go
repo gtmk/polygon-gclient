@@ -5,9 +5,14 @@ import (
 	"fmt"
 	"net/url"
 	"strconv"
+	"time"
 
 	"github.com/google/go-querystring/query"
 	ej "github.com/mailru/easyjson"
+)
+
+const (
+	DateLayoutISO = "2006-01-02"
 )
 
 ////////////////////////////////////////////////////////////////////////////
@@ -55,9 +60,9 @@ func (c *Client) endpointWithOpts(endpoint string, opts *RequestOptions) (string
 	return endpoint, nil
 }
 
-func (c *Client) StockAggregates(ticker string, multiplier int32, timespan Timespan, from, to string, opts *RequestOptions) (*Bars, error) {
+func (c *Client) StockAggregates(ticker string, multiplier int32, timespan Timespan, from, to time.Time, opts *RequestOptions) (*Bars, error) {
 	var out StockBarsResponse
-	endpoint := fmt.Sprintf("/v2/aggs/ticker/%s/range/%s/%s/%s/%s", url.PathEscape(ticker), url.PathEscape(strconv.Itoa(int(multiplier))), url.PathEscape(string(timespan)), url.PathEscape(from), url.PathEscape(to))
+	endpoint := fmt.Sprintf("/v2/aggs/ticker/%s/range/%s/%s/%s/%s", url.PathEscape(ticker), url.PathEscape(strconv.Itoa(int(multiplier))), url.PathEscape(string(timespan)), url.PathEscape(from.Format(DateLayoutISO)), url.PathEscape(to.Format(DateLayoutISO)))
 	endpoint, err := c.endpointWithOpts(endpoint, opts)
 	if err != nil {
 		return nil, err
@@ -70,9 +75,10 @@ func (c *Client) StockAggregates(ticker string, multiplier int32, timespan Times
 	return &out.Results, err
 }
 
-func (c *Client) StockGroupedDaily(locale Locale, market Market, date string, opts *RequestOptions) (*Bars, error) {
+func (c *Client) StockGroupedDaily(locale Locale, market Market, date time.Time, opts *RequestOptions) (*Bars, error) {
+	layoutISO := "2006-01-02"
 	var out StockBarsResponse
-	endpoint := fmt.Sprintf("/v2/aggs/grouped/locale/%s/market/%s/%s", url.PathEscape(string(locale)), url.PathEscape(string(market)), url.PathEscape(date))
+	endpoint := fmt.Sprintf("/v2/aggs/grouped/locale/%s/market/%s/%s", url.PathEscape(string(locale)), url.PathEscape(string(market)), url.PathEscape(date.Format(layoutISO)))
 	endpoint, err := c.endpointWithOpts(endpoint, opts)
 	if err != nil {
 		return nil, err
@@ -85,9 +91,9 @@ func (c *Client) StockGroupedDaily(locale Locale, market Market, date string, op
 	return &out.Results, err
 }
 
-func (c *Client) StockTrades(ticker, date string, opts *RequestOptions) (*Trades, error) {
+func (c *Client) StockTrades(ticker string, date time.Time, opts *RequestOptions) (*Trades, error) {
 	var out StockTradesResponse
-	endpoint := fmt.Sprintf("/v2/ticks/stocks/trades/%s/%s", url.PathEscape(ticker), url.PathEscape(date))
+	endpoint := fmt.Sprintf("/v2/ticks/stocks/trades/%s/%s", url.PathEscape(ticker), url.PathEscape(date.Format(DateLayoutISO)))
 	endpoint, err := c.endpointWithOpts(endpoint, opts)
 	if err != nil {
 		return nil, err
@@ -100,7 +106,7 @@ func (c *Client) StockTrades(ticker, date string, opts *RequestOptions) (*Trades
 	return &out.Results, err
 }
 
-func (c *Client) StockDailyTrades(ticker, date string, opts *RequestOptions) ([]*Trades, error) {
+func (c *Client) StockDailyTrades(ticker string, date time.Time, opts *RequestOptions) ([]*Trades, error) {
 	if opts == nil {
 		opts = &RequestOptions{Limit: 50000}
 	}
@@ -120,9 +126,9 @@ func (c *Client) StockDailyTrades(ticker, date string, opts *RequestOptions) ([]
 	return out, nil
 }
 
-func (c *Client) StockQuotes(ticker, date string, opts *RequestOptions) (*Quotes, error) {
+func (c *Client) StockQuotes(ticker string, date time.Time, opts *RequestOptions) (*Quotes, error) {
 	var out StockQuotesResponse
-	endpoint := fmt.Sprintf("/v2/ticks/stocks/nbbo/%s/%s", url.PathEscape(ticker), url.PathEscape(date))
+	endpoint := fmt.Sprintf("/v2/ticks/stocks/nbbo/%s/%s", url.PathEscape(ticker), url.PathEscape(date.Format(DateLayoutISO)))
 	endpoint, err := c.endpointWithOpts(endpoint, opts)
 	if err != nil {
 		return nil, err
@@ -135,7 +141,7 @@ func (c *Client) StockQuotes(ticker, date string, opts *RequestOptions) (*Quotes
 	return &out.Results, err
 }
 
-func (c *Client) StockDailyQuotes(ticker, date string, opts *RequestOptions) ([]*Quotes, error) {
+func (c *Client) StockDailyQuotes(ticker string, date time.Time, opts *RequestOptions) ([]*Quotes, error) {
 	if opts == nil {
 		opts = &RequestOptions{Limit: 50000}
 	}
@@ -173,9 +179,9 @@ func (c *Client) StockLastQuote(ticker string) (LastQuote, error) {
 	return out.Last, err
 }
 
-func (c *Client) StockDaily(ticker, date string) (*Daily, error) {
+func (c *Client) StockDaily(ticker string, date time.Time) (*Daily, error) {
 	var out Daily
-	endpoint := fmt.Sprintf("/v1/open-close/%s/%s", url.PathEscape(ticker), url.PathEscape(date))
+	endpoint := fmt.Sprintf("/v1/open-close/%s/%s", url.PathEscape(ticker), url.PathEscape(date.Format(DateLayoutISO)))
 	err := c.GetJSON(context.Background(), endpoint, &out)
 	return &out, err
 }

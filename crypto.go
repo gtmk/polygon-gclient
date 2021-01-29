@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"time"
 )
 
 ////////////////////////////////////////////////////////////////////////////
@@ -23,11 +24,11 @@ func (c *Client) CryptoPreviousClose(ticker string, opts *RequestOptions) (*Bars
 	return c.StockPreviousClose(ticker, opts)
 }
 
-func (c *Client) CryptoAggregates(ticker string, multiplier int32, timespan Timespan, from, to string, opts *RequestOptions) (*Bars, error) {
+func (c *Client) CryptoAggregates(ticker string, multiplier int32, timespan Timespan, from, to time.Time, opts *RequestOptions) (*Bars, error) {
 	return c.StockAggregates(ticker, multiplier, timespan, from, to, opts)
 }
 
-func (c *Client) CryptoGroupedDaily(locale Locale, date string, opts *RequestOptions) (*Bars, error) {
+func (c *Client) CryptoGroupedDaily(locale Locale, date time.Time, opts *RequestOptions) (*Bars, error) {
 	return c.StockGroupedDaily(locale, Crypto, date, opts)
 }
 
