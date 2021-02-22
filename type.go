@@ -603,7 +603,7 @@ type StreamTrades []StreamTrade
 // polygon transmits via websocket protocol.
 type StreamQuote struct {
 	Symbol      string  `json:"sym"`
-	Condition   int32   `json:"c"`
+	Condition   *int32  `json:"c"`
 	BidExchange int32   `json:"bx"`
 	AskExchange int32   `json:"ax"`
 	BidPrice    float32 `json:"bp"`
