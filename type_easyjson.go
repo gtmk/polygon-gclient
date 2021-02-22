@@ -1138,6 +1138,8 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(in *jlexer.Lexer, out *S
 			continue
 		}
 		switch key {
+		case "ev":
+			out.Event = string(in.String())
 		case "sym":
 			out.Symbol = string(in.String())
 		case "x":
@@ -1173,6 +1175,8 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(in *jlexer.Lexer, out *S
 				}
 				in.Delim(']')
 			}
+		case "z":
+			out.Unknown = int32(in.Int32())
 		default:
 			in.SkipRecursive()
 		}
@@ -1188,8 +1192,13 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(out *jwriter.Writer, in 
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"sym\":"
+		const prefix string = ",\"ev\":"
 		out.RawString(prefix[1:])
+		out.String(string(in.Event))
+	}
+	{
+		const prefix string = ",\"sym\":"
+		out.RawString(prefix)
 		out.String(string(in.Symbol))
 	}
 	{
@@ -1233,6 +1242,11 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(out *jwriter.Writer, in 
 			out.RawByte(']')
 		}
 	}
+	{
+		const prefix string = ",\"z\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Unknown))
+	}
 	out.RawByte('}')
 }
 
@@ -1268,7 +1282,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient7(in *jlexer.Lexer, out *S
 		in.Delim('[')
 		if *out == nil {
 			if !in.IsDelim(']') {
-				*out = make(StreamQuotes, 0, 1)
+				*out = make(StreamQuotes, 0, 0)
 			} else {
 				*out = StreamQuotes{}
 			}
@@ -1344,18 +1358,12 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient8(in *jlexer.Lexer, out *S
 			continue
 		}
 		switch key {
+		case "ev":
+			out.Event = string(in.String())
 		case "sym":
 			out.Symbol = string(in.String())
 		case "c":
-			if in.IsNull() {
-				in.Skip()
-				out.Condition = nil
-			} else {
-				if out.Condition == nil {
-					out.Condition = new(int32)
-				}
-				*out.Condition = int32(in.Int32())
-			}
+			out.Condition = int32(in.Int32())
 		case "bx":
 			out.BidExchange = int32(in.Int32())
 		case "ax":
@@ -1370,6 +1378,8 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient8(in *jlexer.Lexer, out *S
 			out.AskSize = int32(in.Int32())
 		case "t":
 			out.Timestamp = int64(in.Int64())
+		case "z":
+			out.Unknown = int32(in.Int32())
 		default:
 			in.SkipRecursive()
 		}
@@ -1385,18 +1395,19 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient8(out *jwriter.Writer, in 
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"sym\":"
+		const prefix string = ",\"ev\":"
 		out.RawString(prefix[1:])
+		out.String(string(in.Event))
+	}
+	{
+		const prefix string = ",\"sym\":"
+		out.RawString(prefix)
 		out.String(string(in.Symbol))
 	}
 	{
 		const prefix string = ",\"c\":"
 		out.RawString(prefix)
-		if in.Condition == nil {
-			out.RawString("null")
-		} else {
-			out.Int32(int32(*in.Condition))
-		}
+		out.Int32(int32(in.Condition))
 	}
 	{
 		const prefix string = ",\"bx\":"
@@ -1432,6 +1443,11 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient8(out *jwriter.Writer, in 
 		const prefix string = ",\"t\":"
 		out.RawString(prefix)
 		out.Int64(int64(in.Timestamp))
+	}
+	{
+		const prefix string = ",\"z\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Unknown))
 	}
 	out.RawByte('}')
 }

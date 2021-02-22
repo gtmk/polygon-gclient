@@ -587,6 +587,7 @@ type PolgyonServerMsges []PolgyonServerMsg
 // StreamTrade is the structure that defines a trade that
 // polygon transmits via websocket protocol.
 type StreamTrade struct {
+	Event      string  `json:"ev"`
 	Symbol     string  `json:"sym"`
 	Exchange   int32   `json:"x"`
 	TradeID    string  `json:"i"`
@@ -594,6 +595,7 @@ type StreamTrade struct {
 	Size       int32   `json:"s"`
 	Timestamp  int64   `json:"t"`
 	Conditions []int32 `json:"c"`
+	Unknown    int32   `json:"z"`
 }
 
 //easyjson:json
@@ -602,8 +604,9 @@ type StreamTrades []StreamTrade
 // StreamQuote is the structure that defines a quote that
 // polygon transmits via websocket protocol.
 type StreamQuote struct {
+	Event       string  `json:"ev"`
 	Symbol      string  `json:"sym"`
-	Condition   *int32  `json:"c"`
+	Condition   int32   `json:"c"`
 	BidExchange int32   `json:"bx"`
 	AskExchange int32   `json:"ax"`
 	BidPrice    float32 `json:"bp"`
@@ -611,6 +614,7 @@ type StreamQuote struct {
 	BidSize     int32   `json:"bs"`
 	AskSize     int32   `json:"as"`
 	Timestamp   int64   `json:"t"`
+	Unknown     int32   `json:"z"`
 }
 
 //easyjson:json
