@@ -241,25 +241,20 @@ func (s *Stream) reconnect() error {
 	return nil
 }
 
-func ParseEvent(bts []byte, isEJ ...bool) (PolgyonServerMsg, error) {
-	iEJ := false
+func ParseEvents(bts []byte, isEJ ...bool) (PolgyonServerMsg, error) {
+	iEJ := true
 	var out PolgyonServerMsges
+	var err error
 	if iEJ {
-		err := ej.Unmarshal(bts, &out)
-		if len(out) > 0 {
-			return out[0], err
-		}
+		err = ej.Unmarshal(bts, &out)
 	} else {
-		err := json.Unmarshal(bts, &out)
-		if len(out) > 0 {
-			return out[0], err
-		}
+		err = json.Unmarshal(bts, &out)
 	}
 	return PolgyonServerMsg{}, fmt.Errorf("empty message")
 }
 
 func ParseStreamTrades(bts []byte, isEJ ...bool) (StreamTrades, error) {
-	iEJ := false
+	iEJ := true
 	var out StreamTrades
 	var err error
 	if iEJ {
@@ -271,7 +266,7 @@ func ParseStreamTrades(bts []byte, isEJ ...bool) (StreamTrades, error) {
 }
 
 func ParseStreamQuotes(bts []byte, isEJ ...bool) (StreamQuotes, error) {
-	iEJ := false
+	iEJ := true
 	var out StreamQuotes
 	var err error
 	if iEJ {
@@ -283,7 +278,7 @@ func ParseStreamQuotes(bts []byte, isEJ ...bool) (StreamQuotes, error) {
 }
 
 func ParseStreamAggregates(bts []byte, isEJ ...bool) (StreamAggregates, error) {
-	iEJ := false
+	iEJ := true
 	var out StreamAggregates
 	var err error
 	if iEJ {
