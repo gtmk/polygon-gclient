@@ -250,7 +250,7 @@ func ParseEvents(bts []byte, isEJ ...bool) (PolgyonServerMsg, error) {
 	} else {
 		err = json.Unmarshal(bts, &out)
 	}
-	return PolgyonServerMsg{}, fmt.Errorf("empty message")
+	return out, err
 }
 
 func ParseStreamTrades(bts []byte, isEJ ...bool) (StreamTrades, error) {
