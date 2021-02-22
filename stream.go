@@ -242,9 +242,9 @@ func (s *Stream) reconnect() error {
 }
 
 func ParseEvent(bts []byte, isEJ ...bool) (PolgyonServerMsg, error) {
-	isEJ := false
+	iEJ := false
 	var out PolgyonServerMsges
-	if isEJ {
+	if iEJ {
 		err := ej.Unmarshal(bts, &out)
 		if len(out) > 0 {
 			return out[0], err
