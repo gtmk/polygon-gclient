@@ -1,6 +1,7 @@
 package polygonio
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"strings"
@@ -61,6 +62,7 @@ func (s *Stream) Register() error {
 	if s.conn == nil {
 		s.conn, err = s.openSocket()
 		if err != nil {
+			fmt.Println(fmt.Sprintf("failed to open with err %+v", err))
 			return err
 		}
 	}
@@ -184,17 +186,22 @@ func (s *Stream) start() {
 				if err != nil {
 					s.ErrorC <- err
 					s.conn = nil
+					fmt.Println(fmt.Sprintf("unknown error %+v", err))
 					return
 				}
 				continue
 			} else {
 				s.ErrorC <- err
 				s.conn = nil
+				fmt.Println(fmt.Sprintf("unknown error %+v", err))
 				return
 			}
 		}
 		s.MessageC <- bts
 	}
+}
+
+func (s *Stream) closeWS() {
 }
 
 func (s *Stream) sub(channel string) error {
@@ -234,29 +241,55 @@ func (s *Stream) reconnect() error {
 	return nil
 }
 
-func ParseEvent(bts []byte) (PolgyonServerMsg, error) {
+func ParseEvent(bts []byte, isEJ ...bool) (PolgyonServerMsg, error) {
+	isEJ := false
 	var out PolgyonServerMsges
-	err := ej.Unmarshal(bts, &out)
-	if len(out) > 0 {
-		return out[0], err
+	if isEJ {
+		err := ej.Unmarshal(bts, &out)
+		if len(out) > 0 {
+			return out[0], err
+		}
+	} else {
+		err := json.Unmarshal(bts, &out)
+		if len(out) > 0 {
+			return out[0], err
+		}
 	}
 	return PolgyonServerMsg{}, fmt.Errorf("empty message")
 }
 
-func ParseStreamTrades(bts []byte) (StreamTrades, error) {
+func ParseStreamTrades(bts []byte, isEJ ...bool) (StreamTrades, error) {
+	iEJ := false
 	var out StreamTrades
-	err := ej.Unmarshal(bts, &out)
+	var err error
+	if iEJ {
+		err = ej.Unmarshal(bts, &out)
+	} else {
+		err = json.Unmarshal(bts, &out)
+	}
 	return out, err
 }
 
-func ParseStreamQuotes(bts []byte) (StreamQuotes, error) {
+func ParseStreamQuotes(bts []byte, isEJ ...bool) (StreamQuotes, error) {
+	iEJ := false
 	var out StreamQuotes
-	err := ej.Unmarshal(bts, &out)
+	var err error
+	if iEJ {
+		err = ej.Unmarshal(bts, &out)
+	} else {
+		err = ej.Unmarshal(bts, &out)
+	}
 	return out, err
 }
 
-func ParseStreamAggregates(bts []byte) (StreamAggregates, error) {
+func ParseStreamAggregates(bts []byte, isEJ ...bool) (StreamAggregates, error) {
+	iEJ := false
 	var out StreamAggregates
-	err := ej.Unmarshal(bts, &out)
+	var err error
+	if iEJ {
+		err = ej.Unmarshal(bts, &out)
+	} else {
+		err = json.Unmarshal(bts, &out)
+	}
 	return out, err
 }
