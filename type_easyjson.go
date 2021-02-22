@@ -4,7 +4,6 @@ package polygonio
 
 import (
 	json "encoding/json"
-
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -2604,160 +2603,7 @@ func (v *Quote) UnmarshalJSON(data []byte) error {
 func (v *Quote) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient18(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient19(in *jlexer.Lexer, out *PolygonClientMsg) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "action":
-			out.Action = string(in.String())
-		case "params":
-			out.Params = string(in.String())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient19(out *jwriter.Writer, in PolygonClientMsg) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"action\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Action))
-	}
-	{
-		const prefix string = ",\"params\":"
-		out.RawString(prefix)
-		out.String(string(in.Params))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v PolygonClientMsg) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient19(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v PolygonClientMsg) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient19(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *PolygonClientMsg) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient19(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *PolygonClientMsg) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient19(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient20(in *jlexer.Lexer, out *PolygonAuthMsg) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "ev":
-			out.Event = string(in.String())
-		case "status":
-			out.Status = string(in.String())
-		case "message":
-			out.Message = string(in.String())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient20(out *jwriter.Writer, in PolygonAuthMsg) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"ev\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Event))
-	}
-	{
-		const prefix string = ",\"status\":"
-		out.RawString(prefix)
-		out.String(string(in.Status))
-	}
-	{
-		const prefix string = ",\"message\":"
-		out.RawString(prefix)
-		out.String(string(in.Message))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v PolygonAuthMsg) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient20(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v PolygonAuthMsg) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient20(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *PolygonAuthMsg) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient20(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *PolygonAuthMsg) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient20(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient21(in *jlexer.Lexer, out *PolgyonServerMsges) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient19(in *jlexer.Lexer, out *PolygonServerMsges) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		in.Skip()
@@ -2766,15 +2612,15 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient21(in *jlexer.Lexer, out *
 		in.Delim('[')
 		if *out == nil {
 			if !in.IsDelim(']') {
-				*out = make(PolgyonServerMsges, 0, 0)
+				*out = make(PolygonServerMsges, 0, 0)
 			} else {
-				*out = PolgyonServerMsges{}
+				*out = PolygonServerMsges{}
 			}
 		} else {
 			*out = (*out)[:0]
 		}
 		for !in.IsDelim(']') {
-			var v47 PolgyonServerMsg
+			var v47 PolygonServerMsg
 			(v47).UnmarshalEasyJSON(in)
 			*out = append(*out, v47)
 			in.WantComma()
@@ -2785,7 +2631,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient21(in *jlexer.Lexer, out *
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient21(out *jwriter.Writer, in PolgyonServerMsges) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient19(out *jwriter.Writer, in PolygonServerMsges) {
 	if in == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 		out.RawString("null")
 	} else {
@@ -2801,29 +2647,29 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient21(out *jwriter.Writer, in
 }
 
 // MarshalJSON supports json.Marshaler interface
-func (v PolgyonServerMsges) MarshalJSON() ([]byte, error) {
+func (v PolygonServerMsges) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient21(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient19(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
-func (v PolgyonServerMsges) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient21(w, v)
+func (v PolygonServerMsges) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient19(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
-func (v *PolgyonServerMsges) UnmarshalJSON(data []byte) error {
+func (v *PolygonServerMsges) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient21(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient19(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *PolgyonServerMsges) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient21(l, v)
+func (v *PolygonServerMsges) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient19(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient22(in *jlexer.Lexer, out *PolgyonServerMsg) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient20(in *jlexer.Lexer, out *PolygonServerMsg) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -2908,7 +2754,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient22(in *jlexer.Lexer, out *
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient22(out *jwriter.Writer, in PolgyonServerMsg) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient20(out *jwriter.Writer, in PolygonServerMsg) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -3047,26 +2893,179 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient22(out *jwriter.Writer, in
 }
 
 // MarshalJSON supports json.Marshaler interface
-func (v PolgyonServerMsg) MarshalJSON() ([]byte, error) {
+func (v PolygonServerMsg) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient20(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v PolygonServerMsg) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient20(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *PolygonServerMsg) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient20(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *PolygonServerMsg) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient20(l, v)
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient21(in *jlexer.Lexer, out *PolygonClientMsg) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "action":
+			out.Action = string(in.String())
+		case "params":
+			out.Params = string(in.String())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient21(out *jwriter.Writer, in PolygonClientMsg) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"action\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.Action))
+	}
+	{
+		const prefix string = ",\"params\":"
+		out.RawString(prefix)
+		out.String(string(in.Params))
+	}
+	out.RawByte('}')
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v PolygonClientMsg) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient21(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v PolygonClientMsg) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient21(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *PolygonClientMsg) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient21(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *PolygonClientMsg) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient21(l, v)
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient22(in *jlexer.Lexer, out *PolygonAuthMsg) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "ev":
+			out.Event = string(in.String())
+		case "status":
+			out.Status = string(in.String())
+		case "message":
+			out.Message = string(in.String())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient22(out *jwriter.Writer, in PolygonAuthMsg) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"ev\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.Event))
+	}
+	{
+		const prefix string = ",\"status\":"
+		out.RawString(prefix)
+		out.String(string(in.Status))
+	}
+	{
+		const prefix string = ",\"message\":"
+		out.RawString(prefix)
+		out.String(string(in.Message))
+	}
+	out.RawByte('}')
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v PolygonAuthMsg) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
 	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient22(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
-func (v PolgyonServerMsg) MarshalEasyJSON(w *jwriter.Writer) {
+func (v PolygonAuthMsg) MarshalEasyJSON(w *jwriter.Writer) {
 	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient22(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
-func (v *PolgyonServerMsg) UnmarshalJSON(data []byte) error {
+func (v *PolygonAuthMsg) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
 	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient22(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *PolgyonServerMsg) UnmarshalEasyJSON(l *jlexer.Lexer) {
+func (v *PolygonAuthMsg) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient22(l, v)
 }
 func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient23(in *jlexer.Lexer, out *NewsOptions) {
