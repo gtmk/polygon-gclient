@@ -277,7 +277,7 @@ func ParseStreamQuotes(bts []byte, isEJ ...bool) (StreamQuotes, error) {
 	if iEJ {
 		err = ej.Unmarshal(bts, &out)
 	} else {
-		err = ej.Unmarshal(bts, &out)
+		err = json.Unmarshal(bts, &out)
 	}
 	return out, err
 }
