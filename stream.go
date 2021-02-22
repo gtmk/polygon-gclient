@@ -241,7 +241,7 @@ func (s *Stream) reconnect() error {
 	return nil
 }
 
-func ParseEvents(bts []byte, isEJ ...bool) (PolgyonServerMsg, error) {
+func ParseEvents(bts []byte, isEJ ...bool) (PolgyonServerMsges, error) {
 	iEJ := true
 	var out PolgyonServerMsges
 	var err error
