@@ -2765,7 +2765,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient21(in *jlexer.Lexer, out *
 		in.Delim('[')
 		if *out == nil {
 			if !in.IsDelim(']') {
-				*out = make(PolgyonServerMsges, 0, 4)
+				*out = make(PolgyonServerMsges, 0, 0)
 			} else {
 				*out = PolgyonServerMsges{}
 			}
@@ -2843,6 +2843,60 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient22(in *jlexer.Lexer, out *
 		switch key {
 		case "ev":
 			out.Event = string(in.String())
+		case "sym":
+			out.Symbol = string(in.String())
+		case "x":
+			out.Exchange = int32(in.Int32())
+		case "i":
+			out.TradeID = string(in.String())
+		case "p":
+			out.Price = float32(in.Float32())
+		case "s":
+			out.Size = int32(in.Int32())
+		case "c":
+			if m, ok := out.C.(easyjson.Unmarshaler); ok {
+				m.UnmarshalEasyJSON(in)
+			} else if m, ok := out.C.(json.Unmarshaler); ok {
+				_ = m.UnmarshalJSON(in.Raw())
+			} else {
+				out.C = in.Interface()
+			}
+		case "t":
+			out.Timestamp = int64(in.Int64())
+		case "z":
+			out.Unknown = int32(in.Int32())
+		case "bx":
+			out.BidExchange = int32(in.Int32())
+		case "ax":
+			out.AskExchange = int32(in.Int32())
+		case "bp":
+			out.BidPrice = float32(in.Float32())
+		case "ap":
+			out.AskPrice = float32(in.Float32())
+		case "bs":
+			out.BidSize = int32(in.Int32())
+		case "as":
+			out.AskSize = int32(in.Int32())
+		case "v":
+			out.Volume = int32(in.Int32())
+		case "av":
+			out.AccumulatedVolume = int64(in.Int64())
+		case "op":
+			out.OpeningPrice = float32(in.Float32())
+		case "vw":
+			out.VWAP = float32(in.Float32())
+		case "o":
+			out.OpenPrice = float32(in.Float32())
+		case "h":
+			out.HighPrice = float32(in.Float32())
+		case "l":
+			out.LowPrice = float32(in.Float32())
+		case "a":
+			out.Average = float32(in.Float32())
+		case "s":
+			out.StartTimestamp = int64(in.Int64())
+		case "e":
+			out.EndTimestamp = int64(in.Int64())
 		default:
 			in.SkipRecursive()
 		}
@@ -2861,6 +2915,132 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient22(out *jwriter.Writer, in
 		const prefix string = ",\"ev\":"
 		out.RawString(prefix[1:])
 		out.String(string(in.Event))
+	}
+	{
+		const prefix string = ",\"sym\":"
+		out.RawString(prefix)
+		out.String(string(in.Symbol))
+	}
+	{
+		const prefix string = ",\"x\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Exchange))
+	}
+	{
+		const prefix string = ",\"i\":"
+		out.RawString(prefix)
+		out.String(string(in.TradeID))
+	}
+	{
+		const prefix string = ",\"p\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.Price))
+	}
+	{
+		const prefix string = ",\"s\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Size))
+	}
+	{
+		const prefix string = ",\"c\":"
+		out.RawString(prefix)
+		if m, ok := in.C.(easyjson.Marshaler); ok {
+			m.MarshalEasyJSON(out)
+		} else if m, ok := in.C.(json.Marshaler); ok {
+			out.Raw(m.MarshalJSON())
+		} else {
+			out.Raw(json.Marshal(in.C))
+		}
+	}
+	{
+		const prefix string = ",\"t\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.Timestamp))
+	}
+	{
+		const prefix string = ",\"z\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Unknown))
+	}
+	{
+		const prefix string = ",\"bx\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.BidExchange))
+	}
+	{
+		const prefix string = ",\"ax\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.AskExchange))
+	}
+	{
+		const prefix string = ",\"bp\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.BidPrice))
+	}
+	{
+		const prefix string = ",\"ap\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.AskPrice))
+	}
+	{
+		const prefix string = ",\"bs\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.BidSize))
+	}
+	{
+		const prefix string = ",\"as\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.AskSize))
+	}
+	{
+		const prefix string = ",\"v\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Volume))
+	}
+	{
+		const prefix string = ",\"av\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.AccumulatedVolume))
+	}
+	{
+		const prefix string = ",\"op\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.OpeningPrice))
+	}
+	{
+		const prefix string = ",\"vw\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.VWAP))
+	}
+	{
+		const prefix string = ",\"o\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.OpenPrice))
+	}
+	{
+		const prefix string = ",\"h\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.HighPrice))
+	}
+	{
+		const prefix string = ",\"l\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.LowPrice))
+	}
+	{
+		const prefix string = ",\"a\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.Average))
+	}
+	{
+		const prefix string = ",\"s\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.StartTimestamp))
+	}
+	{
+		const prefix string = ",\"e\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.EndTimestamp))
 	}
 	out.RawByte('}')
 }
