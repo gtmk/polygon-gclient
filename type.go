@@ -583,7 +583,7 @@ type PolygonServerMsg struct {
 	Exchange          int32       `json:"x"`
 	TradeID           string      `json:"i"`
 	Price             float32     `json:"p"`
-	Size              int32       `json:"s"`
+	S                 interface{} `json:"s"`
 	C                 interface{} `json:"c"`
 	Timestamp         int64       `json:"t"`
 	Unknown           int32       `json:"z"`
@@ -601,7 +601,6 @@ type PolygonServerMsg struct {
 	HighPrice         float32     `json:"h"`
 	LowPrice          float32     `json:"l"`
 	Average           float32     `json:"a"`
-	StartTimestamp    int64       `json:"s"`
 	EndTimestamp      int64       `json:"e"`
 }
 

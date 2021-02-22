@@ -2699,7 +2699,13 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient20(in *jlexer.Lexer, out *
 		case "p":
 			out.Price = float32(in.Float32())
 		case "s":
-			out.Size = int32(in.Int32())
+			if m, ok := out.S.(easyjson.Unmarshaler); ok {
+				m.UnmarshalEasyJSON(in)
+			} else if m, ok := out.S.(json.Unmarshaler); ok {
+				_ = m.UnmarshalJSON(in.Raw())
+			} else {
+				out.S = in.Interface()
+			}
 		case "c":
 			if m, ok := out.C.(easyjson.Unmarshaler); ok {
 				m.UnmarshalEasyJSON(in)
@@ -2740,8 +2746,6 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient20(in *jlexer.Lexer, out *
 			out.LowPrice = float32(in.Float32())
 		case "a":
 			out.Average = float32(in.Float32())
-		case "s":
-			out.StartTimestamp = int64(in.Int64())
 		case "e":
 			out.EndTimestamp = int64(in.Int64())
 		default:
@@ -2786,7 +2790,13 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient20(out *jwriter.Writer, in
 	{
 		const prefix string = ",\"s\":"
 		out.RawString(prefix)
-		out.Int32(int32(in.Size))
+		if m, ok := in.S.(easyjson.Marshaler); ok {
+			m.MarshalEasyJSON(out)
+		} else if m, ok := in.S.(json.Marshaler); ok {
+			out.Raw(m.MarshalJSON())
+		} else {
+			out.Raw(json.Marshal(in.S))
+		}
 	}
 	{
 		const prefix string = ",\"c\":"
@@ -2878,11 +2888,6 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient20(out *jwriter.Writer, in
 		const prefix string = ",\"a\":"
 		out.RawString(prefix)
 		out.Float32(float32(in.Average))
-	}
-	{
-		const prefix string = ",\"s\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.StartTimestamp))
 	}
 	{
 		const prefix string = ",\"e\":"
