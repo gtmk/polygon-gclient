@@ -4,6 +4,7 @@ package polygonio
 
 import (
 	json "encoding/json"
+
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -2699,13 +2700,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient20(in *jlexer.Lexer, out *
 		case "p":
 			out.Price = float32(in.Float32())
 		case "s":
-			if m, ok := out.S.(easyjson.Unmarshaler); ok {
-				m.UnmarshalEasyJSON(in)
-			} else if m, ok := out.S.(json.Unmarshaler); ok {
-				_ = m.UnmarshalJSON(in.Raw())
-			} else {
-				out.S = in.Interface()
-			}
+			out.S = int64(in.Int64())
 		case "c":
 			if m, ok := out.C.(easyjson.Unmarshaler); ok {
 				m.UnmarshalEasyJSON(in)
@@ -2790,13 +2785,7 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient20(out *jwriter.Writer, in
 	{
 		const prefix string = ",\"s\":"
 		out.RawString(prefix)
-		if m, ok := in.S.(easyjson.Marshaler); ok {
-			m.MarshalEasyJSON(out)
-		} else if m, ok := in.S.(json.Marshaler); ok {
-			out.Raw(m.MarshalJSON())
-		} else {
-			out.Raw(json.Marshal(in.S))
-		}
+		out.Int64(int64(in.S))
 	}
 	{
 		const prefix string = ",\"c\":"

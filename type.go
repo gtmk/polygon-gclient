@@ -583,7 +583,7 @@ type PolygonServerMsg struct {
 	Exchange          int32       `json:"x"`
 	TradeID           string      `json:"i"`
 	Price             float32     `json:"p"`
-	S                 interface{} `json:"s"`
+	S                 int64       `json:"s"`
 	C                 interface{} `json:"c"`
 	Timestamp         int64       `json:"t"`
 	Unknown           int32       `json:"z"`
