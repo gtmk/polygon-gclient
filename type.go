@@ -577,7 +577,7 @@ type PolygonAuthMsg struct {
 	Message string `json:"message"`
 }
 
-type PolygonServerMsg struct {
+type StreamingServerMsg struct {
 	Event             string      `json:"ev"`
 	Symbol            string      `json:"sym"`
 	Exchange          int32       `json:"x"`
@@ -586,7 +586,7 @@ type PolygonServerMsg struct {
 	S                 int64       `json:"s"`
 	C                 interface{} `json:"c"`
 	Timestamp         int64       `json:"t"`
-	Unknown           int32       `json:"z"`
+	Unknown           int64       `json:"z"`
 	BidExchange       int32       `json:"bx"`
 	AskExchange       int32       `json:"ax"`
 	BidPrice          float32     `json:"bp"`
@@ -605,7 +605,7 @@ type PolygonServerMsg struct {
 }
 
 //easyjson:json
-type PolygonServerMsges []PolygonServerMsg
+type StreamingServerMsges []StreamingServerMsg
 
 // StreamTrade is the structure that defines a trade that
 // polygon transmits via websocket protocol.
@@ -657,6 +657,7 @@ type StreamAggregate struct {
 	HighPrice         float32 `json:"h"`
 	LowPrice          float32 `json:"l"`
 	Average           float32 `json:"a"`
+	TotalTrade        int32   `jdon:"z"`
 	StartTimestamp    int64   `json:"s"`
 	EndTimestamp      int64   `json:"e"`
 }

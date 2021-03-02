@@ -4,7 +4,6 @@ package polygonio
 
 import (
 	json "encoding/json"
-
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -1054,7 +1053,312 @@ func (v *Ticker) UnmarshalJSON(data []byte) error {
 func (v *Ticker) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient4(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient5(in *jlexer.Lexer, out *StreamTrades) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient5(in *jlexer.Lexer, out *StreamingServerMsges) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		in.Skip()
+		*out = nil
+	} else {
+		in.Delim('[')
+		if *out == nil {
+			if !in.IsDelim(']') {
+				*out = make(StreamingServerMsges, 0, 0)
+			} else {
+				*out = StreamingServerMsges{}
+			}
+		} else {
+			*out = (*out)[:0]
+		}
+		for !in.IsDelim(']') {
+			var v20 StreamingServerMsg
+			(v20).UnmarshalEasyJSON(in)
+			*out = append(*out, v20)
+			in.WantComma()
+		}
+		in.Delim(']')
+	}
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient5(out *jwriter.Writer, in StreamingServerMsges) {
+	if in == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+		out.RawString("null")
+	} else {
+		out.RawByte('[')
+		for v21, v22 := range in {
+			if v21 > 0 {
+				out.RawByte(',')
+			}
+			(v22).MarshalEasyJSON(out)
+		}
+		out.RawByte(']')
+	}
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v StreamingServerMsges) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient5(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v StreamingServerMsges) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient5(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *StreamingServerMsges) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient5(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *StreamingServerMsges) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient5(l, v)
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(in *jlexer.Lexer, out *StreamingServerMsg) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "ev":
+			out.Event = string(in.String())
+		case "sym":
+			out.Symbol = string(in.String())
+		case "x":
+			out.Exchange = int32(in.Int32())
+		case "i":
+			out.TradeID = string(in.String())
+		case "p":
+			out.Price = float32(in.Float32())
+		case "s":
+			out.S = int64(in.Int64())
+		case "c":
+			if m, ok := out.C.(easyjson.Unmarshaler); ok {
+				m.UnmarshalEasyJSON(in)
+			} else if m, ok := out.C.(json.Unmarshaler); ok {
+				_ = m.UnmarshalJSON(in.Raw())
+			} else {
+				out.C = in.Interface()
+			}
+		case "t":
+			out.Timestamp = int64(in.Int64())
+		case "z":
+			out.Unknown = int64(in.Int64())
+		case "bx":
+			out.BidExchange = int32(in.Int32())
+		case "ax":
+			out.AskExchange = int32(in.Int32())
+		case "bp":
+			out.BidPrice = float32(in.Float32())
+		case "ap":
+			out.AskPrice = float32(in.Float32())
+		case "bs":
+			out.BidSize = int32(in.Int32())
+		case "as":
+			out.AskSize = int32(in.Int32())
+		case "v":
+			out.Volume = int32(in.Int32())
+		case "av":
+			out.AccumulatedVolume = int64(in.Int64())
+		case "op":
+			out.OpeningPrice = float32(in.Float32())
+		case "vw":
+			out.VWAP = float32(in.Float32())
+		case "o":
+			out.OpenPrice = float32(in.Float32())
+		case "h":
+			out.HighPrice = float32(in.Float32())
+		case "l":
+			out.LowPrice = float32(in.Float32())
+		case "a":
+			out.Average = float32(in.Float32())
+		case "e":
+			out.EndTimestamp = int64(in.Int64())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(out *jwriter.Writer, in StreamingServerMsg) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"ev\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.Event))
+	}
+	{
+		const prefix string = ",\"sym\":"
+		out.RawString(prefix)
+		out.String(string(in.Symbol))
+	}
+	{
+		const prefix string = ",\"x\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Exchange))
+	}
+	{
+		const prefix string = ",\"i\":"
+		out.RawString(prefix)
+		out.String(string(in.TradeID))
+	}
+	{
+		const prefix string = ",\"p\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.Price))
+	}
+	{
+		const prefix string = ",\"s\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.S))
+	}
+	{
+		const prefix string = ",\"c\":"
+		out.RawString(prefix)
+		if m, ok := in.C.(easyjson.Marshaler); ok {
+			m.MarshalEasyJSON(out)
+		} else if m, ok := in.C.(json.Marshaler); ok {
+			out.Raw(m.MarshalJSON())
+		} else {
+			out.Raw(json.Marshal(in.C))
+		}
+	}
+	{
+		const prefix string = ",\"t\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.Timestamp))
+	}
+	{
+		const prefix string = ",\"z\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.Unknown))
+	}
+	{
+		const prefix string = ",\"bx\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.BidExchange))
+	}
+	{
+		const prefix string = ",\"ax\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.AskExchange))
+	}
+	{
+		const prefix string = ",\"bp\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.BidPrice))
+	}
+	{
+		const prefix string = ",\"ap\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.AskPrice))
+	}
+	{
+		const prefix string = ",\"bs\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.BidSize))
+	}
+	{
+		const prefix string = ",\"as\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.AskSize))
+	}
+	{
+		const prefix string = ",\"v\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.Volume))
+	}
+	{
+		const prefix string = ",\"av\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.AccumulatedVolume))
+	}
+	{
+		const prefix string = ",\"op\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.OpeningPrice))
+	}
+	{
+		const prefix string = ",\"vw\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.VWAP))
+	}
+	{
+		const prefix string = ",\"o\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.OpenPrice))
+	}
+	{
+		const prefix string = ",\"h\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.HighPrice))
+	}
+	{
+		const prefix string = ",\"l\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.LowPrice))
+	}
+	{
+		const prefix string = ",\"a\":"
+		out.RawString(prefix)
+		out.Float32(float32(in.Average))
+	}
+	{
+		const prefix string = ",\"e\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.EndTimestamp))
+	}
+	out.RawByte('}')
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v StreamingServerMsg) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v StreamingServerMsg) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *StreamingServerMsg) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *StreamingServerMsg) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(l, v)
+}
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient7(in *jlexer.Lexer, out *StreamTrades) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		in.Skip()
@@ -1071,9 +1375,9 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient5(in *jlexer.Lexer, out *S
 			*out = (*out)[:0]
 		}
 		for !in.IsDelim(']') {
-			var v20 StreamTrade
-			(v20).UnmarshalEasyJSON(in)
-			*out = append(*out, v20)
+			var v23 StreamTrade
+			(v23).UnmarshalEasyJSON(in)
+			*out = append(*out, v23)
 			in.WantComma()
 		}
 		in.Delim(']')
@@ -1082,16 +1386,16 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient5(in *jlexer.Lexer, out *S
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient5(out *jwriter.Writer, in StreamTrades) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient7(out *jwriter.Writer, in StreamTrades) {
 	if in == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 		out.RawString("null")
 	} else {
 		out.RawByte('[')
-		for v21, v22 := range in {
-			if v21 > 0 {
+		for v24, v25 := range in {
+			if v24 > 0 {
 				out.RawByte(',')
 			}
-			(v22).MarshalEasyJSON(out)
+			(v25).MarshalEasyJSON(out)
 		}
 		out.RawByte(']')
 	}
@@ -1100,27 +1404,27 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient5(out *jwriter.Writer, in 
 // MarshalJSON supports json.Marshaler interface
 func (v StreamTrades) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient5(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient7(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v StreamTrades) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient5(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient7(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *StreamTrades) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient5(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient7(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *StreamTrades) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient5(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient7(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(in *jlexer.Lexer, out *StreamTrade) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient8(in *jlexer.Lexer, out *StreamTrade) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1169,9 +1473,9 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(in *jlexer.Lexer, out *S
 					out.Conditions = (out.Conditions)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v23 int32
-					v23 = int32(in.Int32())
-					out.Conditions = append(out.Conditions, v23)
+					var v26 int32
+					v26 = int32(in.Int32())
+					out.Conditions = append(out.Conditions, v26)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1188,7 +1492,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(in *jlexer.Lexer, out *S
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(out *jwriter.Writer, in StreamTrade) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient8(out *jwriter.Writer, in StreamTrade) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1234,11 +1538,11 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(out *jwriter.Writer, in 
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v24, v25 := range in.Conditions {
-				if v24 > 0 {
+			for v27, v28 := range in.Conditions {
+				if v27 > 0 {
 					out.RawByte(',')
 				}
-				out.Int32(int32(v25))
+				out.Int32(int32(v28))
 			}
 			out.RawByte(']')
 		}
@@ -1254,27 +1558,27 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(out *jwriter.Writer, in 
 // MarshalJSON supports json.Marshaler interface
 func (v StreamTrade) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient8(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v StreamTrade) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient8(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *StreamTrade) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient8(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *StreamTrade) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient8(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient7(in *jlexer.Lexer, out *StreamQuotes) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient9(in *jlexer.Lexer, out *StreamQuotes) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		in.Skip()
@@ -1291,9 +1595,9 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient7(in *jlexer.Lexer, out *S
 			*out = (*out)[:0]
 		}
 		for !in.IsDelim(']') {
-			var v26 StreamQuote
-			(v26).UnmarshalEasyJSON(in)
-			*out = append(*out, v26)
+			var v29 StreamQuote
+			(v29).UnmarshalEasyJSON(in)
+			*out = append(*out, v29)
 			in.WantComma()
 		}
 		in.Delim(']')
@@ -1302,16 +1606,16 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient7(in *jlexer.Lexer, out *S
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient7(out *jwriter.Writer, in StreamQuotes) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient9(out *jwriter.Writer, in StreamQuotes) {
 	if in == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 		out.RawString("null")
 	} else {
 		out.RawByte('[')
-		for v27, v28 := range in {
-			if v27 > 0 {
+		for v30, v31 := range in {
+			if v30 > 0 {
 				out.RawByte(',')
 			}
-			(v28).MarshalEasyJSON(out)
+			(v31).MarshalEasyJSON(out)
 		}
 		out.RawByte(']')
 	}
@@ -1320,27 +1624,27 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient7(out *jwriter.Writer, in 
 // MarshalJSON supports json.Marshaler interface
 func (v StreamQuotes) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient7(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient9(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v StreamQuotes) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient7(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient9(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *StreamQuotes) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient7(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient9(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *StreamQuotes) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient7(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient9(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient8(in *jlexer.Lexer, out *StreamQuote) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient10(in *jlexer.Lexer, out *StreamQuote) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1391,7 +1695,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient8(in *jlexer.Lexer, out *S
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient8(out *jwriter.Writer, in StreamQuote) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient10(out *jwriter.Writer, in StreamQuote) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1456,27 +1760,27 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient8(out *jwriter.Writer, in 
 // MarshalJSON supports json.Marshaler interface
 func (v StreamQuote) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient8(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient10(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v StreamQuote) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient8(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient10(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *StreamQuote) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient8(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient10(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *StreamQuote) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient8(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient10(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient9(in *jlexer.Lexer, out *StreamAggregates) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient11(in *jlexer.Lexer, out *StreamAggregates) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		in.Skip()
@@ -1493,9 +1797,9 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient9(in *jlexer.Lexer, out *S
 			*out = (*out)[:0]
 		}
 		for !in.IsDelim(']') {
-			var v29 StreamAggregate
-			(v29).UnmarshalEasyJSON(in)
-			*out = append(*out, v29)
+			var v32 StreamAggregate
+			(v32).UnmarshalEasyJSON(in)
+			*out = append(*out, v32)
 			in.WantComma()
 		}
 		in.Delim(']')
@@ -1504,16 +1808,16 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient9(in *jlexer.Lexer, out *S
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient9(out *jwriter.Writer, in StreamAggregates) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient11(out *jwriter.Writer, in StreamAggregates) {
 	if in == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 		out.RawString("null")
 	} else {
 		out.RawByte('[')
-		for v30, v31 := range in {
-			if v30 > 0 {
+		for v33, v34 := range in {
+			if v33 > 0 {
 				out.RawByte(',')
 			}
-			(v31).MarshalEasyJSON(out)
+			(v34).MarshalEasyJSON(out)
 		}
 		out.RawByte(']')
 	}
@@ -1522,27 +1826,27 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient9(out *jwriter.Writer, in 
 // MarshalJSON supports json.Marshaler interface
 func (v StreamAggregates) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient9(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient11(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v StreamAggregates) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient9(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient11(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *StreamAggregates) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient9(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient11(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *StreamAggregates) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient9(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient11(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient10(in *jlexer.Lexer, out *StreamAggregate) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient12(in *jlexer.Lexer, out *StreamAggregate) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1583,6 +1887,8 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient10(in *jlexer.Lexer, out *
 			out.LowPrice = float32(in.Float32())
 		case "a":
 			out.Average = float32(in.Float32())
+		case "TotalTrade":
+			out.TotalTrade = int32(in.Int32())
 		case "s":
 			out.StartTimestamp = int64(in.Int64())
 		case "e":
@@ -1597,7 +1903,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient10(in *jlexer.Lexer, out *
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient10(out *jwriter.Writer, in StreamAggregate) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient12(out *jwriter.Writer, in StreamAggregate) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1657,6 +1963,11 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient10(out *jwriter.Writer, in
 		out.Float32(float32(in.Average))
 	}
 	{
+		const prefix string = ",\"TotalTrade\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.TotalTrade))
+	}
+	{
 		const prefix string = ",\"s\":"
 		out.RawString(prefix)
 		out.Int64(int64(in.StartTimestamp))
@@ -1672,27 +1983,27 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient10(out *jwriter.Writer, in
 // MarshalJSON supports json.Marshaler interface
 func (v StreamAggregate) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient10(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient12(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v StreamAggregate) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient10(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient12(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *StreamAggregate) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient10(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient12(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *StreamAggregate) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient10(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient12(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient11(in *jlexer.Lexer, out *StockTradesResponse) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient13(in *jlexer.Lexer, out *StockTradesResponse) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1727,9 +2038,9 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient11(in *jlexer.Lexer, out *
 					out.Results = (out.Results)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v32 Trade
-					(v32).UnmarshalEasyJSON(in)
-					out.Results = append(out.Results, v32)
+					var v35 Trade
+					(v35).UnmarshalEasyJSON(in)
+					out.Results = append(out.Results, v35)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1744,7 +2055,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient11(in *jlexer.Lexer, out *
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient11(out *jwriter.Writer, in StockTradesResponse) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient13(out *jwriter.Writer, in StockTradesResponse) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1755,11 +2066,11 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient11(out *jwriter.Writer, in
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v33, v34 := range in.Results {
-				if v33 > 0 {
+			for v36, v37 := range in.Results {
+				if v36 > 0 {
 					out.RawByte(',')
 				}
-				(v34).MarshalEasyJSON(out)
+				(v37).MarshalEasyJSON(out)
 			}
 			out.RawByte(']')
 		}
@@ -1770,27 +2081,27 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient11(out *jwriter.Writer, in
 // MarshalJSON supports json.Marshaler interface
 func (v StockTradesResponse) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient11(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient13(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v StockTradesResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient11(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient13(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *StockTradesResponse) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient11(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient13(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *StockTradesResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient11(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient13(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient12(in *jlexer.Lexer, out *StockSnapshotsResponse) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient14(in *jlexer.Lexer, out *StockSnapshotsResponse) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1825,9 +2136,9 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient12(in *jlexer.Lexer, out *
 					out.Results = (out.Results)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v35 Snapshot
-					(v35).UnmarshalEasyJSON(in)
-					out.Results = append(out.Results, v35)
+					var v38 Snapshot
+					(v38).UnmarshalEasyJSON(in)
+					out.Results = append(out.Results, v38)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1842,7 +2153,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient12(in *jlexer.Lexer, out *
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient12(out *jwriter.Writer, in StockSnapshotsResponse) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient14(out *jwriter.Writer, in StockSnapshotsResponse) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1853,11 +2164,11 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient12(out *jwriter.Writer, in
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v36, v37 := range in.Results {
-				if v36 > 0 {
+			for v39, v40 := range in.Results {
+				if v39 > 0 {
 					out.RawByte(',')
 				}
-				(v37).MarshalEasyJSON(out)
+				(v40).MarshalEasyJSON(out)
 			}
 			out.RawByte(']')
 		}
@@ -1868,27 +2179,27 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient12(out *jwriter.Writer, in
 // MarshalJSON supports json.Marshaler interface
 func (v StockSnapshotsResponse) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient12(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient14(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v StockSnapshotsResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient12(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient14(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *StockSnapshotsResponse) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient12(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient14(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *StockSnapshotsResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient12(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient14(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient13(in *jlexer.Lexer, out *StockQuotesResponse) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient15(in *jlexer.Lexer, out *StockQuotesResponse) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1923,9 +2234,9 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient13(in *jlexer.Lexer, out *
 					out.Results = (out.Results)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v38 Quote
-					(v38).UnmarshalEasyJSON(in)
-					out.Results = append(out.Results, v38)
+					var v41 Quote
+					(v41).UnmarshalEasyJSON(in)
+					out.Results = append(out.Results, v41)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1940,7 +2251,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient13(in *jlexer.Lexer, out *
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient13(out *jwriter.Writer, in StockQuotesResponse) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient15(out *jwriter.Writer, in StockQuotesResponse) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1951,11 +2262,11 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient13(out *jwriter.Writer, in
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v39, v40 := range in.Results {
-				if v39 > 0 {
+			for v42, v43 := range in.Results {
+				if v42 > 0 {
 					out.RawByte(',')
 				}
-				(v40).MarshalEasyJSON(out)
+				(v43).MarshalEasyJSON(out)
 			}
 			out.RawByte(']')
 		}
@@ -1966,27 +2277,27 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient13(out *jwriter.Writer, in
 // MarshalJSON supports json.Marshaler interface
 func (v StockQuotesResponse) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient13(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient15(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v StockQuotesResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient13(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient15(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *StockQuotesResponse) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient13(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient15(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *StockQuotesResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient13(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient15(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient14(in *jlexer.Lexer, out *StockBarsResponse) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient16(in *jlexer.Lexer, out *StockBarsResponse) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -2017,7 +2328,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient14(in *jlexer.Lexer, out *
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient14(out *jwriter.Writer, in StockBarsResponse) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient16(out *jwriter.Writer, in StockBarsResponse) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -2032,27 +2343,27 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient14(out *jwriter.Writer, in
 // MarshalJSON supports json.Marshaler interface
 func (v StockBarsResponse) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient14(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient16(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v StockBarsResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient14(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient16(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *StockBarsResponse) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient14(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient16(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *StockBarsResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient14(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient16(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient15(in *jlexer.Lexer, out *Split) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient17(in *jlexer.Lexer, out *Split) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -2097,7 +2408,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient15(in *jlexer.Lexer, out *
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient15(out *jwriter.Writer, in Split) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient17(out *jwriter.Writer, in Split) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -2147,27 +2458,27 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient15(out *jwriter.Writer, in
 // MarshalJSON supports json.Marshaler interface
 func (v Split) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient15(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient17(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v Split) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient15(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient17(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *Split) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient15(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient17(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *Split) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient15(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient17(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient16(in *jlexer.Lexer, out *Snapshot) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient18(in *jlexer.Lexer, out *Snapshot) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -2214,7 +2525,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient16(in *jlexer.Lexer, out *
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient16(out *jwriter.Writer, in Snapshot) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient18(out *jwriter.Writer, in Snapshot) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -2269,27 +2580,27 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient16(out *jwriter.Writer, in
 // MarshalJSON supports json.Marshaler interface
 func (v Snapshot) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient16(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient18(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v Snapshot) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient16(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient18(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *Snapshot) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient16(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient18(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *Snapshot) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient16(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient18(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient17(in *jlexer.Lexer, out *RequestOptions) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient19(in *jlexer.Lexer, out *RequestOptions) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -2330,7 +2641,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient17(in *jlexer.Lexer, out *
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient17(out *jwriter.Writer, in RequestOptions) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient19(out *jwriter.Writer, in RequestOptions) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -2370,27 +2681,27 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient17(out *jwriter.Writer, in
 // MarshalJSON supports json.Marshaler interface
 func (v RequestOptions) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient17(&w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient19(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v RequestOptions) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient17(w, v)
+	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient19(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *RequestOptions) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient17(&r, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient19(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *RequestOptions) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient17(l, v)
+	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient19(l, v)
 }
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient18(in *jlexer.Lexer, out *Quote) {
+func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient20(in *jlexer.Lexer, out *Quote) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -2433,9 +2744,9 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient18(in *jlexer.Lexer, out *
 					out.Conditions = (out.Conditions)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v41 int32
-					v41 = int32(in.Int32())
-					out.Conditions = append(out.Conditions, v41)
+					var v44 int32
+					v44 = int32(in.Int32())
+					out.Conditions = append(out.Conditions, v44)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -2456,9 +2767,9 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient18(in *jlexer.Lexer, out *
 					out.Indicators = (out.Indicators)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v42 int32
-					v42 = int32(in.Int32())
-					out.Indicators = append(out.Indicators, v42)
+					var v45 int32
+					v45 = int32(in.Int32())
+					out.Indicators = append(out.Indicators, v45)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -2487,7 +2798,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient18(in *jlexer.Lexer, out *
 		in.Consumed()
 	}
 }
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient18(out *jwriter.Writer, in Quote) {
+func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient20(out *jwriter.Writer, in Quote) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -2518,11 +2829,11 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient18(out *jwriter.Writer, in
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v43, v44 := range in.Conditions {
-				if v43 > 0 {
+			for v46, v47 := range in.Conditions {
+				if v46 > 0 {
 					out.RawByte(',')
 				}
-				out.Int32(int32(v44))
+				out.Int32(int32(v47))
 			}
 			out.RawByte(']')
 		}
@@ -2534,11 +2845,11 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient18(out *jwriter.Writer, in
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v45, v46 := range in.Indicators {
-				if v45 > 0 {
+			for v48, v49 := range in.Indicators {
+				if v48 > 0 {
 					out.RawByte(',')
 				}
-				out.Int32(int32(v46))
+				out.Int32(int32(v49))
 			}
 			out.RawByte(']')
 		}
@@ -2584,329 +2895,24 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient18(out *jwriter.Writer, in
 // MarshalJSON supports json.Marshaler interface
 func (v Quote) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient18(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v Quote) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient18(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *Quote) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient18(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *Quote) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient18(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient19(in *jlexer.Lexer, out *PolygonServerMsges) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		in.Skip()
-		*out = nil
-	} else {
-		in.Delim('[')
-		if *out == nil {
-			if !in.IsDelim(']') {
-				*out = make(PolygonServerMsges, 0, 0)
-			} else {
-				*out = PolygonServerMsges{}
-			}
-		} else {
-			*out = (*out)[:0]
-		}
-		for !in.IsDelim(']') {
-			var v47 PolygonServerMsg
-			(v47).UnmarshalEasyJSON(in)
-			*out = append(*out, v47)
-			in.WantComma()
-		}
-		in.Delim(']')
-	}
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient19(out *jwriter.Writer, in PolygonServerMsges) {
-	if in == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-		out.RawString("null")
-	} else {
-		out.RawByte('[')
-		for v48, v49 := range in {
-			if v48 > 0 {
-				out.RawByte(',')
-			}
-			(v49).MarshalEasyJSON(out)
-		}
-		out.RawByte(']')
-	}
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v PolygonServerMsges) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient19(&w, v)
-	return w.Buffer.BuildBytes(), w.Error
-}
-
-// MarshalEasyJSON supports easyjson.Marshaler interface
-func (v PolygonServerMsges) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient19(w, v)
-}
-
-// UnmarshalJSON supports json.Unmarshaler interface
-func (v *PolygonServerMsges) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient19(&r, v)
-	return r.Error()
-}
-
-// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *PolygonServerMsges) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient19(l, v)
-}
-func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient20(in *jlexer.Lexer, out *PolygonServerMsg) {
-	isTopLevel := in.IsStart()
-	if in.IsNull() {
-		if isTopLevel {
-			in.Consumed()
-		}
-		in.Skip()
-		return
-	}
-	in.Delim('{')
-	for !in.IsDelim('}') {
-		key := in.UnsafeFieldName(false)
-		in.WantColon()
-		if in.IsNull() {
-			in.Skip()
-			in.WantComma()
-			continue
-		}
-		switch key {
-		case "ev":
-			out.Event = string(in.String())
-		case "sym":
-			out.Symbol = string(in.String())
-		case "x":
-			out.Exchange = int32(in.Int32())
-		case "i":
-			out.TradeID = string(in.String())
-		case "p":
-			out.Price = float32(in.Float32())
-		case "s":
-			out.S = int64(in.Int64())
-		case "c":
-			if m, ok := out.C.(easyjson.Unmarshaler); ok {
-				m.UnmarshalEasyJSON(in)
-			} else if m, ok := out.C.(json.Unmarshaler); ok {
-				_ = m.UnmarshalJSON(in.Raw())
-			} else {
-				out.C = in.Interface()
-			}
-		case "t":
-			out.Timestamp = int64(in.Int64())
-		case "z":
-			out.Unknown = int32(in.Int32())
-		case "bx":
-			out.BidExchange = int32(in.Int32())
-		case "ax":
-			out.AskExchange = int32(in.Int32())
-		case "bp":
-			out.BidPrice = float32(in.Float32())
-		case "ap":
-			out.AskPrice = float32(in.Float32())
-		case "bs":
-			out.BidSize = int32(in.Int32())
-		case "as":
-			out.AskSize = int32(in.Int32())
-		case "v":
-			out.Volume = int32(in.Int32())
-		case "av":
-			out.AccumulatedVolume = int64(in.Int64())
-		case "op":
-			out.OpeningPrice = float32(in.Float32())
-		case "vw":
-			out.VWAP = float32(in.Float32())
-		case "o":
-			out.OpenPrice = float32(in.Float32())
-		case "h":
-			out.HighPrice = float32(in.Float32())
-		case "l":
-			out.LowPrice = float32(in.Float32())
-		case "a":
-			out.Average = float32(in.Float32())
-		case "e":
-			out.EndTimestamp = int64(in.Int64())
-		default:
-			in.SkipRecursive()
-		}
-		in.WantComma()
-	}
-	in.Delim('}')
-	if isTopLevel {
-		in.Consumed()
-	}
-}
-func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient20(out *jwriter.Writer, in PolygonServerMsg) {
-	out.RawByte('{')
-	first := true
-	_ = first
-	{
-		const prefix string = ",\"ev\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Event))
-	}
-	{
-		const prefix string = ",\"sym\":"
-		out.RawString(prefix)
-		out.String(string(in.Symbol))
-	}
-	{
-		const prefix string = ",\"x\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.Exchange))
-	}
-	{
-		const prefix string = ",\"i\":"
-		out.RawString(prefix)
-		out.String(string(in.TradeID))
-	}
-	{
-		const prefix string = ",\"p\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Price))
-	}
-	{
-		const prefix string = ",\"s\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.S))
-	}
-	{
-		const prefix string = ",\"c\":"
-		out.RawString(prefix)
-		if m, ok := in.C.(easyjson.Marshaler); ok {
-			m.MarshalEasyJSON(out)
-		} else if m, ok := in.C.(json.Marshaler); ok {
-			out.Raw(m.MarshalJSON())
-		} else {
-			out.Raw(json.Marshal(in.C))
-		}
-	}
-	{
-		const prefix string = ",\"t\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.Timestamp))
-	}
-	{
-		const prefix string = ",\"z\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.Unknown))
-	}
-	{
-		const prefix string = ",\"bx\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.BidExchange))
-	}
-	{
-		const prefix string = ",\"ax\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.AskExchange))
-	}
-	{
-		const prefix string = ",\"bp\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.BidPrice))
-	}
-	{
-		const prefix string = ",\"ap\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.AskPrice))
-	}
-	{
-		const prefix string = ",\"bs\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.BidSize))
-	}
-	{
-		const prefix string = ",\"as\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.AskSize))
-	}
-	{
-		const prefix string = ",\"v\":"
-		out.RawString(prefix)
-		out.Int32(int32(in.Volume))
-	}
-	{
-		const prefix string = ",\"av\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.AccumulatedVolume))
-	}
-	{
-		const prefix string = ",\"op\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.OpeningPrice))
-	}
-	{
-		const prefix string = ",\"vw\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.VWAP))
-	}
-	{
-		const prefix string = ",\"o\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.OpenPrice))
-	}
-	{
-		const prefix string = ",\"h\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.HighPrice))
-	}
-	{
-		const prefix string = ",\"l\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.LowPrice))
-	}
-	{
-		const prefix string = ",\"a\":"
-		out.RawString(prefix)
-		out.Float32(float32(in.Average))
-	}
-	{
-		const prefix string = ",\"e\":"
-		out.RawString(prefix)
-		out.Int64(int64(in.EndTimestamp))
-	}
-	out.RawByte('}')
-}
-
-// MarshalJSON supports json.Marshaler interface
-func (v PolygonServerMsg) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
 	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient20(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
-func (v PolygonServerMsg) MarshalEasyJSON(w *jwriter.Writer) {
+func (v Quote) MarshalEasyJSON(w *jwriter.Writer) {
 	easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient20(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
-func (v *PolygonServerMsg) UnmarshalJSON(data []byte) error {
+func (v *Quote) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
 	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient20(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
-func (v *PolygonServerMsg) UnmarshalEasyJSON(l *jlexer.Lexer) {
+func (v *Quote) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient20(l, v)
 }
 func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient21(in *jlexer.Lexer, out *PolygonClientMsg) {

@@ -126,7 +126,7 @@ func (s *Stream) openSocket() (*websocket.Conn, error) {
 				return nil, err
 			}
 		} else {
-			msg := []PolygonServerMsg{}
+			msg := []StreamingServerMsg{}
 			if err = conn.ReadJSON(&msg); err == nil {
 				return conn, err
 			}
@@ -241,9 +241,9 @@ func (s *Stream) reconnect() error {
 	return nil
 }
 
-func ParseEvents(bts []byte, isEJ ...bool) (PolygonServerMsges, error) {
+func ParseEvents(bts []byte, isEJ ...bool) (StreamingServerMsges, error) {
 	iEJ := true
-	var out PolygonServerMsges
+	var out StreamingServerMsges
 	var err error
 	if iEJ {
 		err = ej.Unmarshal(bts, &out)
