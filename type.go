@@ -586,7 +586,7 @@ type StreamingServerMsg struct {
 	S                 int64       `json:"s"`
 	C                 interface{} `json:"c"`
 	Timestamp         int64       `json:"t"`
-	Unknown           int64       `json:"z"`
+	Trade             int64       `json:"z"`
 	BidExchange       int32       `json:"bx"`
 	AskExchange       int32       `json:"ax"`
 	BidPrice          float32     `json:"bp"`

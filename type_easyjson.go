@@ -1161,7 +1161,7 @@ func easyjsonBc289ab0DecodeGithubComGtmkPolygonGclient6(in *jlexer.Lexer, out *S
 		case "t":
 			out.Timestamp = int64(in.Int64())
 		case "z":
-			out.Unknown = int64(in.Int64())
+			out.Trade = int64(in.Int64())
 		case "bx":
 			out.BidExchange = int32(in.Int32())
 		case "ax":
@@ -1255,7 +1255,7 @@ func easyjsonBc289ab0EncodeGithubComGtmkPolygonGclient6(out *jwriter.Writer, in 
 	{
 		const prefix string = ",\"z\":"
 		out.RawString(prefix)
-		out.Int64(int64(in.Unknown))
+		out.Int64(int64(in.Trade))
 	}
 	{
 		const prefix string = ",\"bx\":"
